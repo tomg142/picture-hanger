@@ -24,298 +24,202 @@
       --radius: 12px;
       --shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: 48px;
+      background: var(--bg); color: var(--text);
+      min-height: 100vh; padding-bottom: 48px;
     }
 
     /* ── Header ── */
     header {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 14px 20px 12px;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      background: var(--card); border-bottom: 1px solid var(--border);
+      padding: 14px 20px 12px; position: sticky; top: 0; z-index: 10;
+      display: flex; justify-content: space-between; align-items: flex-start;
     }
     header h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
     header p  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-
     .unit-toggle {
-      display: flex;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      overflow: hidden;
-      flex-shrink: 0;
-      margin-top: 2px;
+      display: flex; border: 1.5px solid var(--border);
+      border-radius: 8px; overflow: hidden; flex-shrink: 0; margin-top: 2px;
     }
     .unit-toggle button {
-      padding: 6px 13px;
-      border: none;
-      background: transparent;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      cursor: pointer;
+      padding: 6px 13px; border: none; background: transparent;
+      font-size: 14px; font-weight: 500; color: var(--text-secondary); cursor: pointer;
     }
     .unit-toggle button.active { background: var(--accent); color: white; }
 
-    /* ── Layout ── */
+    /* ── Cards ── */
     main { padding: 14px; max-width: 500px; margin: 0 auto; }
-
     .card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 16px;
-      margin-bottom: 12px;
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); padding: 16px; margin-bottom: 12px;
     }
     .card-title {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--text-secondary); margin-bottom: 14px;
     }
 
+    /* ── Form elements ── */
     .row { display: flex; gap: 12px; }
     .field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
     label { font-size: 14px; font-weight: 500; }
+    .hint { font-size: 12px; color: var(--text-secondary); line-height: 1.45; margin-top: 1px; }
 
-    .hint {
-      font-size: 12px;
-      color: var(--text-secondary);
-      line-height: 1.45;
-      margin-top: 1px;
-    }
-
-    /* ── Inputs ── */
     input[type="number"], select {
-      width: 100%;
-      height: 44px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 0 12px;
-      font-size: 16px;
-      color: var(--text);
-      background: var(--bg);
-      -webkit-appearance: none;
-      appearance: none;
-      transition: border-color 0.15s;
+      width: 100%; height: 44px; border: 1.5px solid var(--border);
+      border-radius: 8px; padding: 0 12px; font-size: 16px;
+      color: var(--text); background: var(--bg);
+      -webkit-appearance: none; appearance: none; transition: border-color 0.15s;
     }
     input[type="number"]:focus, select:focus {
-      outline: none;
-      border-color: var(--accent);
-      background: white;
+      outline: none; border-color: var(--accent); background: white;
     }
     select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='%236c6c70' d='M6 7L0 0h12z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      background-color: var(--bg);
-      cursor: pointer;
-      padding-right: 36px;
+      background-repeat: no-repeat; background-position: right 14px center;
+      background-color: var(--bg); cursor: pointer; padding-right: 36px;
     }
 
     /* ── Radio options ── */
     .radio-group { display: flex; flex-direction: column; gap: 8px; }
     .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px; border: 1.5px solid var(--border);
+      border-radius: 8px; cursor: pointer;
     }
     .radio-option.selected { border-color: var(--accent); background: var(--accent-light); }
     .radio-option input[type="radio"] {
-      width: 18px; height: 18px;
-      accent-color: var(--accent);
-      cursor: pointer; flex-shrink: 0;
+      width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0;
     }
     .radio-option .radio-label { font-size: 15px; line-height: 1.4; }
-    .custom-row {
-      display: flex; align-items: center; flex-wrap: wrap;
-      gap: 6px; margin-top: 6px;
-    }
-    .custom-row input[type="number"] {
-      width: 80px; height: 36px; font-size: 15px; flex-shrink: 0;
-    }
-    .custom-row span { font-size: 14px; color: var(--text); }
+    .custom-row { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .custom-row input[type="number"] { width: 80px; height: 36px; font-size: 15px; flex-shrink: 0; }
+    .custom-row span { font-size: 14px; }
 
     /* ── Hanger fields ── */
     .hanger-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
     .hanger-fields.hidden { display: none; }
-
     .info-box {
-      background: var(--warn-bg);
-      border: 1px solid var(--warn-border);
-      border-radius: 8px;
-      padding: 11px 13px;
-      font-size: 13px;
-      color: var(--warn-text);
-      line-height: 1.5;
+      background: var(--warn-bg); border: 1px solid var(--warn-border);
+      border-radius: 8px; padding: 11px 13px; font-size: 13px;
+      color: var(--warn-text); line-height: 1.5;
     }
     .info-box strong { display: block; margin-bottom: 3px; }
 
+    /* ── Section dividers within hanging cards ── */
+    .card-section { margin-bottom: 16px; }
+    .card-section:last-child { margin-bottom: 0; }
+    .section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--text-secondary); margin-bottom: 10px;
+    }
+
+    /* ── Hanging card header ── */
+    .hcard-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      cursor: pointer; margin-bottom: 16px; gap: 10px;
+    }
+    .hanging-label {
+      border: none; background: transparent; font-size: 15px; font-weight: 600;
+      color: var(--text); padding: 0; width: 100%; margin-top: 3px;
+      -webkit-appearance: none;
+    }
+    .hanging-label:focus { outline: none; border-bottom: 1.5px solid var(--accent); }
+    .hcard-header-right { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+    .collapse-icon { font-size: 12px; color: var(--text-secondary); padding: 4px; }
+    .btn-remove {
+      background: none; border: none; color: var(--text-secondary);
+      font-size: 18px; line-height: 1; padding: 4px 6px; cursor: pointer;
+      border-radius: 6px;
+    }
+    .btn-remove:active { background: #ffe5e5; color: #ff3b30; }
+    .card-summary { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+
     /* ── Calculate button ── */
     .btn-calculate {
-      width: 100%;
-      height: 52px;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: var(--radius);
-      font-size: 17px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 12px;
+      width: 100%; height: 52px; background: var(--accent); color: white;
+      border: none; border-radius: var(--radius); font-size: 17px; font-weight: 600;
+      cursor: pointer; margin-top: 4px; margin-bottom: 0;
       box-shadow: 0 4px 12px rgba(0,122,255,0.28);
       transition: opacity 0.15s, transform 0.1s;
     }
     .btn-calculate:active { opacity: 0.85; transform: scale(0.99); }
 
-    /* ── Error ── */
-    #global-error {
-      background: #fff0f0;
-      border: 1px solid #ff3b30;
-      border-radius: 8px;
-      padding: 12px 14px;
-      color: #cc0000;
-      font-size: 14px;
-      line-height: 1.4;
-      margin-bottom: 12px;
-      display: none;
+    /* ── Add hanging button ── */
+    .btn-add-hanging {
+      width: 100%; height: 48px; background: var(--accent-light); color: var(--accent);
+      border: 1.5px dashed var(--accent); border-radius: var(--radius);
+      font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 12px;
+    }
+    .btn-add-hanging:active { opacity: 0.75; }
+
+    /* ── Per-card error ── */
+    .herror {
+      background: #fff0f0; border: 1px solid #ff3b30; border-radius: 8px;
+      padding: 10px 12px; color: #cc0000; font-size: 13px; line-height: 1.4;
+      margin-bottom: 10px;
     }
 
     /* ── Results ── */
-    #results { display: none; }
     .result-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 11px;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 11px;
+      padding: 10px 0; border-bottom: 1px solid var(--border);
     }
     .result-item:last-of-type { border-bottom: none; }
     .result-icon {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      background: var(--success-light);
-      color: var(--success);
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--success-light); color: var(--success);
       display: flex; align-items: center; justify-content: center;
-      font-size: 15px;
-      flex-shrink: 0; margin-top: 1px;
+      font-size: 14px; flex-shrink: 0; margin-top: 1px;
     }
-    .result-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 2px; }
-    .result-value { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
-    .result-sub   { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
+    .result-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 1px; }
+    .result-value { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+    .result-sub   { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
 
-    /* ── Schematic diagram ── */
-    #diagram-canvas { width: 100%; border-radius: 8px; display: block; margin-top: 14px; }
+    /* ── Diagram canvas ── */
+    .diagram-canvas { width: 100%; border-radius: 8px; display: block; margin-top: 12px; }
 
-    /* ── iPhone tip ── */
-    #iphone-tip {
-      background: var(--accent-light);
-      border: 1px solid #b0d0ff;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 13px;
-      color: #004499;
-      line-height: 1.5;
-      margin-top: 14px;
-    }
-    #iphone-tip strong { display: block; margin-bottom: 3px; font-size: 14px; }
+    /* ── Utility ── */
+    .hidden { display: none !important; }
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
 
-    /* ── Visualize card ── */
+    /* ── Viz card ── */
     #visualize-card { display: none; }
-
     .viz-sub-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      margin-top: 16px;
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: 8px; margin-top: 16px;
     }
     .viz-sub-title:first-of-type { margin-top: 0; }
-
     .photo-upload-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      height: 48px;
-      background: var(--accent-light);
-      color: var(--accent);
-      border: 1.5px dashed var(--accent);
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      user-select: none;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; height: 48px; background: var(--accent-light); color: var(--accent);
+      border: 1.5px dashed var(--accent); border-radius: 10px;
+      font-size: 15px; font-weight: 600; cursor: pointer; user-select: none;
     }
     .photo-upload-btn:active { opacity: 0.75; }
-
     .cal-wrapper { margin-top: 10px; display: none; }
-
-    .cal-canvas {
-      width: 100%;
-      border-radius: 8px;
-      display: block;
-      touch-action: none;
-      cursor: crosshair;
-    }
-
-    .cal-hint {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 6px;
-      line-height: 1.4;
-    }
-
+    .cal-canvas { width: 100%; border-radius: 8px; display: block; touch-action: none; cursor: crosshair; }
+    .cal-hint { font-size: 12px; color: var(--text-secondary); margin-top: 6px; line-height: 1.4; }
     #viz-preview-section { display: none; margin-top: 18px; }
-
     #viz-canvas {
-      width: 100%;
-      border-radius: 8px;
-      display: block;
-      margin-top: 8px;
-      touch-action: none;
-      cursor: grab;
+      width: 100%; border-radius: 8px; display: block; margin-top: 8px;
+      touch-action: none; cursor: grab;
       box-shadow: 0 3px 16px rgba(0,0,0,0.18);
     }
     #viz-canvas:active { cursor: grabbing; }
-
     .btn-reset {
-      margin-top: 10px;
-      padding: 9px 18px;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      font-size: 14px;
-      color: var(--text-secondary);
-      cursor: pointer;
-      display: none;
+      margin-top: 10px; padding: 9px 18px; background: var(--bg);
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 14px; color: var(--text-secondary); cursor: pointer; display: none;
     }
     .btn-reset:active { background: var(--border); }
-
-    .divider {
-      height: 1px;
-      background: var(--border);
-      margin: 16px 0;
+    #iphone-tip {
+      background: var(--accent-light); border: 1px solid #b0d0ff;
+      border-radius: 8px; padding: 12px 14px; font-size: 13px;
+      color: #004499; line-height: 1.5; margin-top: 14px;
     }
+    #iphone-tip strong { display: block; margin-bottom: 3px; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -333,7 +237,7 @@
 
 <main>
 
-  <!-- WALL -->
+  <!-- WALL (shared, unchanged) -->
   <div class="card">
     <div class="card-title">Wall Dimensions</div>
     <div class="row">
@@ -349,158 +253,35 @@
     <p class="hint" id="hint-wall">Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).</p>
   </div>
 
-  <!-- HANGING -->
-  <div class="card">
-    <div class="card-title">Hanging Dimensions</div>
-    <div class="row">
-      <div class="field">
-        <label for="frameWidth">Width</label>
-        <input type="number" id="frameWidth" placeholder="e.g. 24" min="1" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label for="frameHeight">Height</label>
-        <input type="number" id="frameHeight" placeholder="e.g. 18" min="1" inputmode="decimal">
-      </div>
-    </div>
-    <p class="hint">Measure the full outer dimensions of the frame or hanging.</p>
-  </div>
+  <!-- HANGING CARDS (dynamic) -->
+  <div id="hangings-list"></div>
+  <button class="btn-add-hanging" onclick="addHanging()">+ Add Another Hanging</button>
 
-  <!-- DESIRED POSITION -->
-  <div class="card">
-    <div class="card-title">Desired Position</div>
-    <div class="field" style="margin-bottom:14px;">
-      <label for="desiredCenter">Center height from floor <span id="unit-display" style="font-weight:400;color:var(--text-secondary)">(inches)</span></label>
-      <input type="number" id="desiredCenter" value="57" min="1" inputmode="decimal">
-      <p class="hint" id="hint-center">Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your preference.</p>
-    </div>
-    <div>
-      <label style="display:block; margin-bottom:8px;">Horizontal placement</label>
-      <div class="radio-group">
-        <label class="radio-option selected" id="opt-center">
-          <input type="radio" name="hpos" value="center" checked onchange="onHPosChange()">
-          <span class="radio-label">Centered on the wall</span>
-        </label>
-        <label class="radio-option" id="opt-custom">
-          <input type="radio" name="hpos" value="custom" onchange="onHPosChange()">
-          <div>
-            <span class="radio-label">Custom position</span>
-            <div class="custom-row">
-              <span>Center of hanging is</span>
-              <input type="number" id="customOffset" placeholder="e.g. 60" min="1" inputmode="decimal"
-                     onfocus="document.querySelector('input[value=custom]').checked=true; onHPosChange();">
-              <span id="unit-label-offset">in</span>
-              <span>from the left wall edge</span>
-            </div>
-          </div>
-        </label>
-      </div>
-    </div>
-  </div>
-
-  <!-- HANGER TYPE -->
-  <div class="card">
-    <div class="card-title">Hanger Type</div>
-    <div class="field">
-      <select id="hangerType" onchange="showHangerInputs()">
-        <option value="single">Single hook or nail (keyhole, single D-ring)</option>
-        <option value="wire">Wire</option>
-        <option value="double">Two hooks / two D-rings</option>
-        <option value="sawtooth">Sawtooth bracket</option>
-      </select>
-    </div>
-
-    <div class="hanger-fields" id="fields-single">
-      <div class="field">
-        <label for="singleDist">Distance from top of frame to hook</label>
-        <input type="number" id="singleDist" placeholder="e.g. 2.5" min="0" inputmode="decimal">
-        <p class="hint">Flip the frame face-down. Measure from the <strong>top edge</strong> straight down to the center of the hook hole or D-ring slot.</p>
-      </div>
-    </div>
-
-    <div class="hanger-fields hidden" id="fields-wire">
-      <div class="info-box">
-        <strong>How to measure the wire distance:</strong>
-        Flip the hanging face-down. Pull the wire up from the center with one finger until it's taut. Measure from the <strong>top edge of the frame</strong> straight down to the highest point of the wire at your finger.
-      </div>
-      <div class="field">
-        <label for="wireDist">Distance from top of frame to wire peak</label>
-        <input type="number" id="wireDist" placeholder="e.g. 3" min="0" inputmode="decimal">
-      </div>
-    </div>
-
-    <div class="hanger-fields hidden" id="fields-double">
-      <div class="field">
-        <label for="doubleDist">Distance from top of frame to hooks</label>
-        <input type="number" id="doubleDist" placeholder="e.g. 2" min="0" inputmode="decimal">
-        <p class="hint">Measure from the <strong>top edge</strong> down to the center of the hook holes. Both hooks should be at the same height.</p>
-      </div>
-      <div class="field">
-        <label for="doubleSpacing">Horizontal distance between the two hooks</label>
-        <input type="number" id="doubleSpacing" placeholder="e.g. 12" min="0" inputmode="decimal">
-        <p class="hint">Measure center-to-center, from the left hook to the right hook.</p>
-      </div>
-    </div>
-
-    <div class="hanger-fields hidden" id="fields-sawtooth">
-      <div class="field">
-        <label for="sawtoothDist">Distance from top of frame to sawtooth strip</label>
-        <input type="number" id="sawtoothDist" placeholder="e.g. 0.5" min="0" inputmode="decimal">
-        <p class="hint">Measure from the <strong>top edge</strong> of the frame down to the top of the sawtooth strip.</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="global-error"></div>
-  <button class="btn-calculate" onclick="calculate()">Calculate Nail Placement</button>
-
-  <!-- RESULTS (schematic) -->
-  <div class="card" id="results">
-    <div class="card-title">Results</div>
-    <div id="result-items"></div>
-    <canvas id="diagram-canvas"></canvas>
-    <div id="iphone-tip">
-      <strong>Using this on your iPhone?</strong>
-      In Safari, tap the <strong>Share</strong> button → <strong>Add to Home Screen</strong>. The app will appear as an icon and open full-screen.
-    </div>
-  </div>
-
-  <!-- VISUALIZE ON YOUR WALL -->
+  <!-- SHARED WALL PREVIEW -->
   <div class="card" id="visualize-card">
     <div class="card-title">Preview on Your Wall</div>
 
-    <!-- Wall photo -->
-    <div class="viz-sub-title">Wall Photo</div>
+    <div class="viz-sub-title" style="margin-top:0">Wall Photo</div>
     <label class="photo-upload-btn">
       📷 &nbsp;Upload Wall Photo
-      <input type="file" accept="image/*" id="wall-photo-input" style="display:none"
-             onchange="onWallPhotoChange(this)">
+      <input type="file" accept="image/*" id="wall-photo-input" style="display:none" onchange="onWallPhotoChange(this)">
     </label>
     <div class="cal-wrapper" id="wall-cal-wrapper">
       <canvas id="wall-cal-canvas" class="cal-canvas"></canvas>
       <p class="cal-hint">Drag the blue lines to align with the four edges of your wall</p>
     </div>
 
-    <div class="divider"></div>
-
-    <!-- Hanging photo -->
-    <div class="viz-sub-title">Hanging Photo</div>
-    <label class="photo-upload-btn">
-      🖼 &nbsp;Upload Hanging Photo
-      <input type="file" accept="image/*" id="hang-photo-input" style="display:none"
-             onchange="onHangPhotoChange(this)">
-    </label>
-    <div class="cal-wrapper" id="hang-cal-wrapper">
-      <canvas id="hang-cal-canvas" class="cal-canvas"></canvas>
-      <p class="cal-hint">Drag the blue lines to align with the four outer edges of the hanging</p>
-    </div>
-
-    <!-- Preview -->
     <div id="viz-preview-section">
       <div class="divider"></div>
-      <div class="viz-sub-title">Preview</div>
-      <p class="cal-hint">Drag the hanging to fine-tune its position on the wall</p>
+      <div class="viz-sub-title" style="margin-top:0">Preview</div>
+      <p class="cal-hint">Tap a hanging to select it, then drag to fine-tune its position</p>
       <canvas id="viz-canvas"></canvas>
-      <button class="btn-reset" id="reset-pos-btn" onclick="resetVizPosition()">Reset Position</button>
+      <button class="btn-reset" id="reset-pos-btn" onclick="resetVizPosition()">Reset All Positions</button>
+    </div>
+
+    <div id="iphone-tip">
+      <strong>Using this on your iPhone?</strong>
+      In Safari, tap <strong>Share</strong> → <strong>Add to Home Screen</strong> for a full-screen app icon.
     </div>
   </div>
 
@@ -508,25 +289,28 @@
 
 <script>
   // ═══════════════════════════════════════════════════════
-  //  STATE
+  //  CONSTANTS & STATE
   // ═══════════════════════════════════════════════════════
-  let unit = 'in';
+  const HANG_COLORS = ['#a8d4ff','#ffb87a','#7de8a0','#d4a8ff','#ffe87a','#7adede'];
 
-  // Visualization state — populated when calculate() runs and photos are loaded
+  let unit    = 'in';
+  let nextId  = 1;
+
+  // Shared wall state
   let vizData = {
-    wallImg: null,
-    hangImg: null,
+    wallImg:  null,
     wallCrop: { l: 0.05, r: 0.95, t: 0.05, b: 0.95 },
-    hangCrop: { l: 0.05, r: 0.95, t: 0.05, b: 0.95 },
-    // Calc results:
-    wallW: 0, wallH: 0, frameW: 0, frameH: 0,
-    frameLeft: 0, frameTopH: 0, frameCenterX: 0,
-    nailH: 0, hangerType: '', leftNailX: 0, rightNailX: 0
+    wallW: 0,
+    wallH: 0,
   };
 
-  let dragOffset     = { x: 0, y: 0 };
-  let vizDragActive  = false;
-  let vizDragStart   = null;
+  // Array of hanging objects
+  let hangings = [];
+
+  // Viz drag state
+  let selectedHangingId = null;
+  let vizDragActive     = false;
+  let vizDragStart      = null;
 
   // ═══════════════════════════════════════════════════════
   //  UNIT TOGGLE
@@ -535,44 +319,264 @@
     unit = u;
     document.getElementById('btn-in').classList.toggle('active', u === 'in');
     document.getElementById('btn-cm').classList.toggle('active', u === 'cm');
-    document.getElementById('unit-display').textContent = u === 'in' ? '(inches)' : '(cm)';
-    document.getElementById('unit-label-offset').textContent = u === 'in' ? 'in' : 'cm';
-    if (u === 'in') {
-      document.getElementById('desiredCenter').value = 57;
-      document.getElementById('wallHeight').placeholder = 'e.g. 96';
-      document.getElementById('wallWidth').placeholder  = 'e.g. 120';
-      document.getElementById('hint-wall').innerHTML =
-        'Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).';
-      document.getElementById('hint-center').innerHTML =
-        'Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your preference.';
+    document.querySelectorAll('.unit-display').forEach(el =>
+      el.textContent = u === 'in' ? '(inches)' : '(cm)');
+    document.querySelectorAll('.unit-label').forEach(el =>
+      el.textContent = u === 'in' ? 'in' : 'cm');
+    document.getElementById('hint-wall').innerHTML = u === 'in'
+      ? 'Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).'
+      : 'Measure the full width and height of your wall. Standard ceiling is <strong>244 cm</strong> (8&nbsp;ft).';
+    hangings.forEach(h => {
+      const el = document.getElementById('desiredCenter-' + h.id);
+      if (el) el.value = u === 'in' ? 57 : 145;
+      const hint = document.getElementById('hint-center-' + h.id);
+      if (hint) hint.innerHTML = u === 'in'
+        ? 'Gallery standard is <strong>57"</strong> from floor to center. Adjust to your preference.'
+        : 'Gallery standard is <strong>145 cm</strong> from floor to center. Adjust to your preference.';
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  HANGING CARD MANAGEMENT
+  // ═══════════════════════════════════════════════════════
+  function getHangingById(id) {
+    return hangings.find(h => h.id === id);
+  }
+
+  function getNumH(id, field) {
+    return parseFloat(document.getElementById(field + '-' + id).value);
+  }
+
+  function addHanging() {
+    const id = nextId++;
+    const h = {
+      id,
+      label:      'Hanging ' + id,
+      collapsed:  false,
+      result:     null,
+      hangImg:    null,
+      hangCrop:   { l: 0.05, r: 0.95, t: 0.05, b: 0.95 },
+      dragOffset: { x: 0, y: 0 },
+    };
+    hangings.push(h);
+
+    const list = document.getElementById('hangings-list');
+    const div  = document.createElement('div');
+    div.innerHTML = createHangingCard(h);
+    list.appendChild(div.firstElementChild);
+
+    // Attach cal drag for this hanging's canvas
+    setupCalDrag(
+      'hang-cal-canvas-' + id,
+      () => getHangingById(id).hangImg,
+      () => getHangingById(id).hangCrop
+    );
+
+    updateRemoveButtons();
+  }
+
+  function removeHanging(id) {
+    hangings = hangings.filter(h => h.id !== id);
+    const card = document.getElementById('hcard-' + id);
+    if (card) card.remove();
+    if (selectedHangingId === id) selectedHangingId = null;
+    updateRemoveButtons();
+    tryDrawViz();
+  }
+
+  function updateRemoveButtons() {
+    const btns = document.querySelectorAll('.btn-remove');
+    btns.forEach(btn => btn.style.visibility = hangings.length > 1 ? 'visible' : 'hidden');
+  }
+
+  function toggleCollapse(id) {
+    const h    = getHangingById(id);
+    if (!h) return;
+    h.collapsed = !h.collapsed;
+    document.getElementById('hbody-' + id).classList.toggle('hidden', h.collapsed);
+    document.getElementById('hcollapse-' + id).textContent = h.collapsed ? '▼' : '▲';
+    const summary = document.getElementById('hsummary-' + id);
+    if (h.collapsed && h.result) {
+      summary.textContent = h.result.frameW + '×' + h.result.frameH
+        + (unit === 'in' ? '"' : ' cm') + '  —  nail at ' + fmtFraction(h.result.nailH);
+      summary.classList.remove('hidden');
     } else {
-      document.getElementById('desiredCenter').value = 145;
-      document.getElementById('wallHeight').placeholder = 'e.g. 244';
-      document.getElementById('wallWidth').placeholder  = 'e.g. 305';
-      document.getElementById('hint-wall').innerHTML =
-        'Measure the full width and height of your wall. Standard ceiling is <strong>244 cm</strong> (8&nbsp;ft).';
-      document.getElementById('hint-center').innerHTML =
-        'Gallery standard is <strong>145 cm</strong> from floor to center of the art. Adjust to your preference.';
+      summary.classList.add('hidden');
     }
+  }
+
+  function createHangingCard(h) {
+    const id = h.id;
+    return `
+<div class="card hanging-card" id="hcard-${id}">
+  <div class="hcard-header" onclick="toggleCollapse(${id})">
+    <div style="flex:1;min-width:0">
+      <div class="card-title" style="margin-bottom:4px">HANGING ${id}</div>
+      <input class="hanging-label" id="hlabel-${id}" value="${h.label}"
+             onclick="event.stopPropagation()"
+             oninput="getHangingById(${id}).label = this.value; tryDrawViz()">
+      <div class="card-summary hidden" id="hsummary-${id}"></div>
+    </div>
+    <div class="hcard-header-right">
+      <span class="collapse-icon" id="hcollapse-${id}">▲</span>
+      <button class="btn-remove" onclick="removeHanging(${id}); event.stopPropagation()">✕</button>
+    </div>
+  </div>
+
+  <div class="hcard-body" id="hbody-${id}">
+
+    <div class="card-section">
+      <div class="section-label">Dimensions</div>
+      <div class="row">
+        <div class="field">
+          <label>Width</label>
+          <input type="number" id="frameWidth-${id}" placeholder="e.g. 24" min="1" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label>Height</label>
+          <input type="number" id="frameHeight-${id}" placeholder="e.g. 18" min="1" inputmode="decimal">
+        </div>
+      </div>
+      <p class="hint">Measure the full outer dimensions of the frame.</p>
+    </div>
+
+    <div class="card-section">
+      <div class="section-label">Desired Position</div>
+      <div class="field" style="margin-bottom:12px">
+        <label>Center height from floor <span class="unit-display" style="font-weight:400;color:var(--text-secondary)">(inches)</span></label>
+        <input type="number" id="desiredCenter-${id}" value="57" min="1" inputmode="decimal">
+        <p class="hint" id="hint-center-${id}">Gallery standard is <strong>57"</strong> from floor to center. Adjust to your preference.</p>
+      </div>
+      <div>
+        <label style="display:block;margin-bottom:8px">Horizontal placement</label>
+        <div class="radio-group">
+          <label class="radio-option selected" id="opt-center-${id}">
+            <input type="radio" name="hpos-${id}" value="center" checked onchange="onHPosChange(${id})">
+            <span class="radio-label">Centered on the wall</span>
+          </label>
+          <label class="radio-option" id="opt-custom-${id}">
+            <input type="radio" name="hpos-${id}" value="custom" onchange="onHPosChange(${id})">
+            <div>
+              <span class="radio-label">Custom position</span>
+              <div class="custom-row">
+                <span>Center is</span>
+                <input type="number" id="customOffset-${id}" placeholder="e.g. 60" min="1" inputmode="decimal"
+                       style="width:70px;height:36px;font-size:15px"
+                       onfocus="selectCustomHpos(${id})">
+                <span class="unit-label">in</span>
+                <span>from left wall edge</span>
+              </div>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-section">
+      <div class="section-label">Hanger Type</div>
+      <select id="hangerType-${id}" onchange="showHangerInputs(${id})">
+        <option value="single">Single hook or nail (keyhole, single D-ring)</option>
+        <option value="wire">Wire</option>
+        <option value="double">Two hooks / two D-rings</option>
+        <option value="sawtooth">Sawtooth bracket</option>
+      </select>
+
+      <div class="hanger-fields" id="fields-single-${id}">
+        <div class="field">
+          <label>Distance from top of frame to hook</label>
+          <input type="number" id="singleDist-${id}" placeholder="e.g. 2.5" min="0" inputmode="decimal">
+          <p class="hint">Flip frame face-down. Measure from <strong>top edge</strong> to center of hook hole.</p>
+        </div>
+      </div>
+
+      <div class="hanger-fields hidden" id="fields-wire-${id}">
+        <div class="info-box">
+          <strong>How to measure wire distance:</strong>
+          Pull wire up from center until taut. Measure from top edge of frame down to the wire peak.
+        </div>
+        <div class="field">
+          <label>Distance from top of frame to wire peak</label>
+          <input type="number" id="wireDist-${id}" placeholder="e.g. 3" min="0" inputmode="decimal">
+        </div>
+      </div>
+
+      <div class="hanger-fields hidden" id="fields-double-${id}">
+        <div class="field">
+          <label>Distance from top of frame to hooks</label>
+          <input type="number" id="doubleDist-${id}" placeholder="e.g. 2" min="0" inputmode="decimal">
+          <p class="hint">Both hooks should be at the same height.</p>
+        </div>
+        <div class="field">
+          <label>Horizontal distance between the two hooks</label>
+          <input type="number" id="doubleSpacing-${id}" placeholder="e.g. 12" min="0" inputmode="decimal">
+          <p class="hint">Measure center-to-center.</p>
+        </div>
+      </div>
+
+      <div class="hanger-fields hidden" id="fields-sawtooth-${id}">
+        <div class="field">
+          <label>Distance from top of frame to sawtooth strip</label>
+          <input type="number" id="sawtoothDist-${id}" placeholder="e.g. 0.5" min="0" inputmode="decimal">
+        </div>
+      </div>
+    </div>
+
+    <div class="herror hidden" id="herror-${id}"></div>
+    <button class="btn-calculate" onclick="calculateHanging(${id})">Calculate Nail Placement</button>
+
+    <div class="hidden" id="hresults-${id}">
+      <div class="divider"></div>
+      <div class="section-label" style="margin-bottom:10px">Results</div>
+      <div id="hresult-items-${id}"></div>
+      <canvas id="hdiagram-${id}" class="diagram-canvas"></canvas>
+    </div>
+
+    <div class="hidden" id="hphoto-${id}">
+      <div class="divider"></div>
+      <div class="viz-sub-title" style="margin-top:0">Photo of this hanging (optional)</div>
+      <label class="photo-upload-btn">
+        🖼 &nbsp;Upload Photo
+        <input type="file" accept="image/*" style="display:none" onchange="onHangPhotoChange(this, ${id})">
+      </label>
+      <div class="cal-wrapper" id="hang-cal-wrapper-${id}">
+        <canvas id="hang-cal-canvas-${id}" class="cal-canvas"></canvas>
+        <p class="cal-hint">Drag the blue lines to the four outer edges of the hanging</p>
+      </div>
+    </div>
+
+  </div>
+</div>`;
   }
 
   // ═══════════════════════════════════════════════════════
   //  FORM HELPERS
   // ═══════════════════════════════════════════════════════
-  function onHPosChange() {
-    const val = document.querySelector('input[name="hpos"]:checked').value;
-    document.getElementById('opt-center').classList.toggle('selected', val === 'center');
-    document.getElementById('opt-custom').classList.toggle('selected', val === 'custom');
+  function onHPosChange(id) {
+    const val = document.querySelector('input[name="hpos-' + id + '"]:checked').value;
+    document.getElementById('opt-center-' + id).classList.toggle('selected', val === 'center');
+    document.getElementById('opt-custom-' + id).classList.toggle('selected', val === 'custom');
   }
 
-  function showHangerInputs() {
-    const type = document.getElementById('hangerType').value;
+  function selectCustomHpos(id) {
+    document.querySelector('input[name="hpos-' + id + '"][value="custom"]').checked = true;
+    onHPosChange(id);
+  }
+
+  function showHangerInputs(id) {
+    const type = document.getElementById('hangerType-' + id).value;
     ['single','wire','double','sawtooth'].forEach(t =>
-      document.getElementById('fields-' + t).classList.toggle('hidden', t !== type));
+      document.getElementById('fields-' + t + '-' + id).classList.toggle('hidden', t !== type));
   }
 
-  function getNum(id) { return parseFloat(document.getElementById(id).value); }
+  function showCardError(id, msg) {
+    const el = document.getElementById('herror-' + id);
+    el.textContent = msg;
+    el.classList.toggle('hidden', !msg);
+  }
 
+  // ═══════════════════════════════════════════════════════
+  //  FORMAT HELPERS
+  // ═══════════════════════════════════════════════════════
   function fmt(n) {
     const r = Math.round(n * 100) / 100;
     return unit === 'in' ? r + '"' : r + ' cm';
@@ -582,36 +586,27 @@
     if (unit !== 'in') return fmt(n);
     const whole = Math.floor(n);
     const dec   = n - whole;
-    const fracs = [
-      [7/8,'⅞'],[3/4,'¾'],[5/8,'⅝'],[1/2,'½'],
-      [3/8,'⅜'],[1/4,'¼'],[1/8,'⅛'],
-    ];
+    const fracs = [[7/8,'⅞'],[3/4,'¾'],[5/8,'⅝'],[1/2,'½'],[3/8,'⅜'],[1/4,'¼'],[1/8,'⅛']];
     for (const [v, s] of fracs) {
       if (Math.abs(dec - v) < 0.04) return (whole || '') + s + '"';
     }
     return fmt(n);
   }
 
-  function showError(msg) {
-    const el = document.getElementById('global-error');
-    el.textContent = msg;
-    el.style.display = msg ? 'block' : 'none';
-  }
-
   // ═══════════════════════════════════════════════════════
   //  CALCULATE
   // ═══════════════════════════════════════════════════════
-  function calculate() {
-    showError('');
-    document.getElementById('results').style.display = 'none';
+  function calculateHanging(id) {
+    showCardError(id, '');
+    const h = getHangingById(id);
 
-    const wallW     = getNum('wallWidth');
-    const wallH     = getNum('wallHeight');
-    const frameW    = getNum('frameWidth');
-    const frameH    = getNum('frameHeight');
-    const centerH   = getNum('desiredCenter');
-    const hposType  = document.querySelector('input[name="hpos"]:checked').value;
-    const hangerType = document.getElementById('hangerType').value;
+    const wallW     = parseFloat(document.getElementById('wallWidth').value);
+    const wallH     = parseFloat(document.getElementById('wallHeight').value);
+    const frameW    = getNumH(id, 'frameWidth');
+    const frameH    = getNumH(id, 'frameHeight');
+    const centerH   = getNumH(id, 'desiredCenter');
+    const hposType  = document.querySelector('input[name="hpos-' + id + '"]:checked').value;
+    const hangerType = document.getElementById('hangerType-' + id).value;
 
     const missing = [];
     if (isNaN(wallW)   || wallW   <= 0) missing.push('Wall width');
@@ -622,56 +617,63 @@
 
     let distFromTop = 0, hookSpacing = 0;
     if (hangerType === 'single') {
-      distFromTop = getNum('singleDist');
+      distFromTop = getNumH(id, 'singleDist');
       if (isNaN(distFromTop) || distFromTop < 0) missing.push('Distance from top to hook');
     } else if (hangerType === 'wire') {
-      distFromTop = getNum('wireDist');
+      distFromTop = getNumH(id, 'wireDist');
       if (isNaN(distFromTop) || distFromTop < 0) missing.push('Wire distance from top');
     } else if (hangerType === 'sawtooth') {
-      distFromTop = getNum('sawtoothDist');
+      distFromTop = getNumH(id, 'sawtoothDist');
       if (isNaN(distFromTop) || distFromTop < 0) missing.push('Sawtooth distance from top');
     } else if (hangerType === 'double') {
-      distFromTop = getNum('doubleDist');
-      hookSpacing = getNum('doubleSpacing');
+      distFromTop = getNumH(id, 'doubleDist');
+      hookSpacing = getNumH(id, 'doubleSpacing');
       if (isNaN(distFromTop) || distFromTop < 0) missing.push('Distance from top to hooks');
       if (isNaN(hookSpacing) || hookSpacing <= 0) missing.push('Hook spacing');
     }
 
-    if (missing.length) { showError('Please fill in: ' + missing.join(', ') + '.'); return; }
-    if (frameW >= wallW)      { showError('The hanging (' + fmt(frameW) + ' wide) is wider than the wall (' + fmt(wallW) + ').'); return; }
-    if (frameH >= wallH)      { showError('The hanging (' + fmt(frameH) + ' tall) is taller than the wall (' + fmt(wallH) + ').'); return; }
-    if (distFromTop > frameH) { showError('The hanger measurement (' + fmt(distFromTop) + ') is greater than the hanging height (' + fmt(frameH) + ').'); return; }
-    if (hangerType === 'double' && hookSpacing >= frameW) { showError('The hook spacing (' + fmt(hookSpacing) + ') is wider than the frame (' + fmt(frameW) + ').'); return; }
+    if (missing.length) { showCardError(id, 'Please fill in: ' + missing.join(', ') + '.'); return; }
+    if (frameW >= wallW)      { showCardError(id, 'Hanging is wider than the wall.'); return; }
+    if (frameH >= wallH)      { showCardError(id, 'Hanging is taller than the wall.'); return; }
+    if (distFromTop > frameH) { showCardError(id, 'Hanger measurement is greater than the hanging height.'); return; }
+    if (hangerType === 'double' && hookSpacing >= frameW) { showCardError(id, 'Hook spacing is wider than the frame.'); return; }
 
-    // Core math: nail height from floor = desiredCenter + frameH/2 - distFromTop
     const nailH = centerH + frameH / 2 - distFromTop;
-    if (nailH <= 0)    { showError('The nail height comes out below the floor. The desired center height may be too low.'); return; }
-    if (nailH > wallH) { showError('The nail height (' + fmt(nailH) + ') would be above the wall. Try lowering the desired center height.'); return; }
+    if (nailH <= 0)    { showCardError(id, 'Nail height comes out below the floor. Lower your desired center height.'); return; }
+    if (nailH > wallH) { showCardError(id, 'Nail height (' + fmt(nailH) + ') is above the wall. Lower the desired center height.'); return; }
 
     let frameCenterX;
     if (hposType === 'center') {
       frameCenterX = wallW / 2;
     } else {
-      frameCenterX = getNum('customOffset');
-      if (isNaN(frameCenterX) || frameCenterX <= 0) { showError('Please enter the custom horizontal offset.'); return; }
+      frameCenterX = getNumH(id, 'customOffset');
+      if (isNaN(frameCenterX) || frameCenterX <= 0) { showCardError(id, 'Please enter the custom horizontal offset.'); return; }
     }
 
     const frameLeft  = frameCenterX - frameW / 2;
     const frameRight = frameCenterX + frameW / 2;
-    if (frameLeft < 0)      { showError('The hanging extends ' + fmt(-frameLeft) + ' past the left wall edge.'); return; }
-    if (frameRight > wallW) { showError('The hanging extends ' + fmt(frameRight - wallW) + ' past the right wall edge.'); return; }
+    if (frameLeft < 0)      { showCardError(id, 'Hanging extends past the left wall edge.'); return; }
+    if (frameRight > wallW) { showCardError(id, 'Hanging extends past the right wall edge.'); return; }
 
     let leftNailX = 0, rightNailX = 0;
     if (hangerType === 'double') {
       leftNailX  = frameCenterX - hookSpacing / 2;
       rightNailX = frameCenterX + hookSpacing / 2;
-      if (leftNailX <= 0 || rightNailX >= wallW) { showError('With this hook spacing, the nails fall outside the wall.'); return; }
+      if (leftNailX <= 0 || rightNailX >= wallW) { showCardError(id, 'Nails fall outside the wall with this spacing.'); return; }
     }
 
     const frameTopH = nailH + distFromTop;
 
+    // Store results in hanging object
+    h.result = { wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX };
+    h.dragOffset = { x: 0, y: 0 };
+
+    // Store wall dims in shared vizData
+    vizData.wallW = wallW;
+    vizData.wallH = wallH;
+
     // ── Render result items ──
-    const items = document.getElementById('result-items');
+    const items = document.getElementById('hresult-items-' + id);
     items.innerHTML = '';
     function addResult(icon, label, mainVal, sub) {
       items.insertAdjacentHTML('beforeend', `
@@ -691,27 +693,32 @@
     } else {
       addResult('✓', 'Nail height from floor', fmtFraction(nailH), 'Nail goes ' + fmtFraction(frameCenterX) + ' from the left wall edge');
     }
-    addResult('↕', 'Frame top will be at', fmtFraction(frameTopH) + ' from floor', 'Frame bottom at ' + fmtFraction(frameTopH - frameH) + ' from floor');
+    addResult('↕', 'Frame top will be at', fmtFraction(frameTopH) + ' from floor', 'Bottom at ' + fmtFraction(frameTopH - frameH) + ' from floor');
     addResult('⬇', 'Or measure down from ceiling', fmtFraction(wallH - nailH), 'Whichever is easier to measure');
 
-    // ── Schematic diagram ──
-    drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX);
+    // ── Schematic ──
+    drawDiagram('hdiagram-' + id, wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX);
 
-    document.getElementById('results').style.display = 'block';
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    // Show results + photo section
+    document.getElementById('hresults-' + id).classList.remove('hidden');
+    document.getElementById('hphoto-'   + id).classList.remove('hidden');
 
-    // ── Init visualization card ──
-    initVizCard({ wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX });
+    // Show shared viz card
+    document.getElementById('visualize-card').style.display = 'block';
+
+    tryDrawViz();
+    document.getElementById('hresults-' + id).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   // ═══════════════════════════════════════════════════════
-  //  SCHEMATIC DIAGRAM (unchanged from original)
+  //  SCHEMATIC DIAGRAM
   // ═══════════════════════════════════════════════════════
-  function drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH,
+  function drawDiagram(canvasId, wallW, wallH, frameW, frameH, frameLeft, frameTopH,
                        frameCenterX, nailH, hangerType, leftNailX, rightNailX) {
-    const canvas = document.getElementById('diagram-canvas');
-    const ctx    = canvas.getContext('2d');
-    const dpr    = window.devicePixelRatio || 1;
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return;
+    const ctx  = canvas.getContext('2d');
+    const dpr  = window.devicePixelRatio || 1;
     const availW = canvas.parentElement.clientWidth - 32;
     const aspect = Math.min(wallH / wallW, 1.2);
     const dispW  = availW;
@@ -724,8 +731,8 @@
     ctx.scale(dpr, dpr);
 
     const scale = dispW / wallW;
-    function wx(x) { return x * scale; }
-    function wy(y) { return dispH - y * scale; }
+    const wx = x => x * scale;
+    const wy = y => dispH - y * scale;
 
     ctx.fillStyle = '#f0ede6';
     ctx.fillRect(0, 0, dispW, dispH);
@@ -739,53 +746,45 @@
 
     const fL = wx(frameLeft), fT = wy(frameTopH);
     const fW = frameW * scale,  fH = frameH * scale;
-
     ctx.fillStyle = '#d0e8ff';
     ctx.fillRect(fL, fT, fW, fH);
     ctx.strokeStyle = '#007aff'; ctx.lineWidth = 2;
     ctx.strokeRect(fL, fT, fW, fH);
 
-    ctx.strokeStyle = 'rgba(0,122,255,0.35)'; ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(0,122,255,0.3)'; ctx.lineWidth = 1;
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
-    ctx.moveTo(fL + fW/2, fT); ctx.lineTo(fL + fW/2, fT + fH);
-    ctx.moveTo(fL, fT + fH/2); ctx.lineTo(fL + fW, fT + fH/2);
-    ctx.stroke();
-    ctx.setLineDash([]);
-
-    const fontSize = Math.max(10, Math.round(dispW / 32));
-    ctx.font = `600 ${fontSize}px -apple-system,sans-serif`;
-    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#005acc';
-    if (fH > fontSize * 2.2 && fW > 50) ctx.fillText('Hanging', fL + fW/2, fT + fH/2);
+    ctx.moveTo(fL+fW/2, fT); ctx.lineTo(fL+fW/2, fT+fH);
+    ctx.moveTo(fL, fT+fH/2); ctx.lineTo(fL+fW, fT+fH/2);
+    ctx.stroke(); ctx.setLineDash([]);
 
     function drawNailDot(nx, ny) {
       const cx = wx(nx), cy = wy(ny);
       ctx.fillStyle = '#ff3b30';
-      ctx.beginPath(); ctx.arc(cx, cy, 5 * dpr * 0.6, 0, Math.PI * 2); ctx.fill();
-      ctx.strokeStyle = '#990000'; ctx.lineWidth = 1; ctx.stroke();
-      const r = 3 * dpr * 0.6;
+      ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI*2); ctx.fill();
       ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5;
+      const r = 3;
       ctx.beginPath();
-      ctx.moveTo(cx-r, cy-r); ctx.lineTo(cx+r, cy+r);
-      ctx.moveTo(cx+r, cy-r); ctx.lineTo(cx-r, cy+r);
+      ctx.moveTo(cx-r,cy-r); ctx.lineTo(cx+r,cy+r);
+      ctx.moveTo(cx+r,cy-r); ctx.lineTo(cx-r,cy+r);
       ctx.stroke();
     }
     if (hangerType === 'double') { drawNailDot(leftNailX, nailH); drawNailDot(rightNailX, nailH); }
     else drawNailDot(frameCenterX, nailH);
 
     const annotX = Math.min(wx(frameLeft + frameW) + 18, dispW - 28);
-    const nailCanvasY = wy(nailH), floorCanvasY = dispH - 2;
+    const nailY  = wy(nailH), floorY = dispH - 2;
     if (annotX < dispW - 5) {
       ctx.strokeStyle = '#34c759'; ctx.lineWidth = 1.5;
-      ctx.setLineDash([4, 3]);
-      ctx.beginPath(); ctx.moveTo(annotX, floorCanvasY); ctx.lineTo(annotX, nailCanvasY); ctx.stroke();
+      ctx.setLineDash([4,3]);
+      ctx.beginPath(); ctx.moveTo(annotX, floorY); ctx.lineTo(annotX, nailY); ctx.stroke();
       ctx.setLineDash([]);
       ctx.fillStyle = '#34c759';
-      ctx.beginPath(); ctx.moveTo(annotX, nailCanvasY-1); ctx.lineTo(annotX-4, nailCanvasY+6); ctx.lineTo(annotX+4, nailCanvasY+6); ctx.fill();
-      const lfs = Math.max(9, Math.round(dispW / 34));
+      ctx.beginPath(); ctx.moveTo(annotX,nailY-1); ctx.lineTo(annotX-4,nailY+6); ctx.lineTo(annotX+4,nailY+6); ctx.fill();
+      const lfs = Math.max(9, Math.round(dispW/34));
       ctx.font = `700 ${lfs}px -apple-system,sans-serif`;
       ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
-      const midY = (nailCanvasY + floorCanvasY) / 2;
+      const midY = (nailY + floorY) / 2;
       const txt  = fmtFraction(nailH);
       const tw   = ctx.measureText(txt).width;
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
@@ -796,21 +795,7 @@
   }
 
   // ═══════════════════════════════════════════════════════
-  //  VISUALIZATION — INIT
-  // ═══════════════════════════════════════════════════════
-  function initVizCard(results) {
-    Object.assign(vizData, results);
-    dragOffset = { x: 0, y: 0 };
-    document.getElementById('reset-pos-btn').style.display = 'none';
-    document.getElementById('visualize-card').style.display = 'block';
-    // Re-draw calibration canvases in case dimensions changed
-    if (vizData.wallImg) drawCalCanvas('wall-cal-canvas', 'wallImg', 'wallCrop');
-    if (vizData.hangImg) drawCalCanvas('hang-cal-canvas', 'hangImg', 'hangCrop');
-    tryDrawViz();
-  }
-
-  // ═══════════════════════════════════════════════════════
-  //  VISUALIZATION — PHOTO LOADING
+  //  PHOTO LOADING
   // ═══════════════════════════════════════════════════════
   function onWallPhotoChange(input) {
     const file = input.files[0];
@@ -818,40 +803,36 @@
     createImageBitmap(file).then(bmp => {
       vizData.wallImg  = bmp;
       vizData.wallCrop = { l: 0.05, r: 0.95, t: 0.05, b: 0.95 };
-      const wrapper = document.getElementById('wall-cal-wrapper');
-      wrapper.style.display = 'block';
-      drawCalCanvas('wall-cal-canvas', 'wallImg', 'wallCrop');
+      document.getElementById('wall-cal-wrapper').style.display = 'block';
+      drawCalCanvas('wall-cal-canvas', vizData.wallImg, vizData.wallCrop);
       tryDrawViz();
     }).catch(() => alert('Could not load that image. Please try another file.'));
   }
 
-  function onHangPhotoChange(input) {
+  function onHangPhotoChange(input, id) {
     const file = input.files[0];
     if (!file) return;
     createImageBitmap(file).then(bmp => {
-      vizData.hangImg  = bmp;
-      vizData.hangCrop = { l: 0.05, r: 0.95, t: 0.05, b: 0.95 };
-      const wrapper = document.getElementById('hang-cal-wrapper');
-      wrapper.style.display = 'block';
-      drawCalCanvas('hang-cal-canvas', 'hangImg', 'hangCrop');
+      const h   = getHangingById(id);
+      h.hangImg  = bmp;
+      h.hangCrop = { l: 0.05, r: 0.95, t: 0.05, b: 0.95 };
+      document.getElementById('hang-cal-wrapper-' + id).style.display = 'block';
+      drawCalCanvas('hang-cal-canvas-' + id, h.hangImg, h.hangCrop);
       tryDrawViz();
     }).catch(() => alert('Could not load that image. Please try another file.'));
   }
 
   // ═══════════════════════════════════════════════════════
-  //  VISUALIZATION — CALIBRATION CANVAS
+  //  CALIBRATION CANVAS
   // ═══════════════════════════════════════════════════════
-  function drawCalCanvas(canvasId, imgKey, cropKey) {
+  function drawCalCanvas(canvasId, img, crop) {
     const canvas = document.getElementById(canvasId);
-    const img    = vizData[imgKey];
-    const crop   = vizData[cropKey];
-    if (!img) return;
+    if (!canvas || !img) return;
 
     const dpr    = window.devicePixelRatio || 1;
     const availW = canvas.parentElement.clientWidth;
-    const aspect = img.height / img.width;
     const dispW  = availW;
-    const dispH  = Math.round(Math.min(dispW * aspect, 380));
+    const dispH  = Math.round(Math.min(dispW * img.height / img.width, 380));
 
     canvas.style.width  = dispW + 'px';
     canvas.style.height = dispH + 'px';
@@ -860,70 +841,54 @@
 
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
-
-    // Draw photo
     ctx.drawImage(img, 0, 0, dispW, dispH);
 
-    // Pixel positions of lines
-    const lx = crop.l * dispW;
-    const rx = crop.r * dispW;
-    const ty = crop.t * dispH;
-    const by = crop.b * dispH;
+    const lx = crop.l * dispW, rx = crop.r * dispW;
+    const ty = crop.t * dispH, by = crop.b * dispH;
 
-    // Darken outside the crop region
-    ctx.fillStyle = 'rgba(0,0,0,0.48)';
-    ctx.fillRect(0,  0,    dispW, ty);           // top strip
-    ctx.fillRect(0,  by,   dispW, dispH - by);   // bottom strip
-    ctx.fillRect(0,  ty,   lx,    by - ty);      // left strip
-    ctx.fillRect(rx, ty,   dispW - rx, by - ty); // right strip
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillRect(0,  0,    dispW, ty);
+    ctx.fillRect(0,  by,   dispW, dispH - by);
+    ctx.fillRect(0,  ty,   lx,    by - ty);
+    ctx.fillRect(rx, ty,   dispW - rx, by - ty);
 
-    // Crop lines
-    ctx.strokeStyle = '#00cfff';
-    ctx.lineWidth   = 2;
+    ctx.strokeStyle = '#00cfff'; ctx.lineWidth = 2;
     ctx.setLineDash([6, 4]);
-    const lines = [
-      [lx, 0, lx, dispH],
-      [rx, 0, rx, dispH],
-      [0, ty, dispW, ty],
-      [0, by, dispW, by],
-    ];
-    for (const [x1, y1, x2, y2] of lines) {
-      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    for (const [x1,y1,x2,y2] of [[lx,0,lx,dispH],[rx,0,rx,dispH],[0,ty,dispW,ty],[0,by,dispW,by]]) {
+      ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
     }
     ctx.setLineDash([]);
 
-    // Corner handles
     for (const [cx, cy] of [[lx,ty],[rx,ty],[rx,by],[lx,by]]) {
       ctx.fillStyle = '#00cfff';
-      ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI*2); ctx.fill();
       ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
     }
   }
 
-  // Attach drag handlers to a calibration canvas (called once on page load)
-  function setupCalDrag(canvasId, imgKey, cropKey) {
+  function setupCalDrag(canvasId, getImg, getCrop) {
     const canvas = document.getElementById(canvasId);
-    let activeLine = null; // 'l' | 'r' | 't' | 'b'
+    if (!canvas) return;
+    let activeLine = null;
 
     function clientToCanvas(e) {
-      const rect    = canvas.getBoundingClientRect();
-      const src     = e.touches ? e.touches[0] : e;
+      const rect = canvas.getBoundingClientRect();
+      const src  = e.touches ? e.touches[0] : e;
       return { x: src.clientX - rect.left, y: src.clientY - rect.top };
     }
 
     function nearLine(x, y) {
-      if (!vizData[imgKey]) return null;
-      const crop  = vizData[cropKey];
-      const dispW = canvas.clientWidth;
-      const dispH = canvas.clientHeight;
-      const HIT   = 28; // px hit area
+      if (!getImg()) return null;
+      const crop = getCrop();
+      const dispW = canvas.clientWidth, dispH = canvas.clientHeight;
+      const HIT = 28;
       const candidates = [
-        { id: 'l', d: Math.abs(x - crop.l * dispW) },
-        { id: 'r', d: Math.abs(x - crop.r * dispW) },
-        { id: 't', d: Math.abs(y - crop.t * dispH) },
-        { id: 'b', d: Math.abs(y - crop.b * dispH) },
+        { id:'l', d: Math.abs(x - crop.l * dispW) },
+        { id:'r', d: Math.abs(x - crop.r * dispW) },
+        { id:'t', d: Math.abs(y - crop.t * dispH) },
+        { id:'b', d: Math.abs(y - crop.b * dispH) },
       ];
-      const best = candidates.reduce((a, b) => a.d < b.d ? a : b);
+      const best = candidates.reduce((a,b) => a.d < b.d ? a : b);
       return best.d < HIT ? best.id : null;
     }
 
@@ -939,143 +904,191 @@
     function onMove(e) {
       if (!activeLine) return;
       e.preventDefault();
-      const pos   = clientToCanvas(e);
-      const crop  = vizData[cropKey];
-      const dispW = canvas.clientWidth;
-      const dispH = canvas.clientHeight;
-      const MIN_GAP = 0.06;
-      if (activeLine === 'l') crop.l = Math.max(0.01, Math.min(crop.r - MIN_GAP, pos.x / dispW));
-      if (activeLine === 'r') crop.r = Math.min(0.99, Math.max(crop.l + MIN_GAP, pos.x / dispW));
-      if (activeLine === 't') crop.t = Math.max(0.01, Math.min(crop.b - MIN_GAP, pos.y / dispH));
-      if (activeLine === 'b') crop.b = Math.min(0.99, Math.max(crop.t + MIN_GAP, pos.y / dispH));
-      drawCalCanvas(canvasId, imgKey, cropKey);
+      const pos  = clientToCanvas(e);
+      const crop = getCrop();
+      const dispW = canvas.clientWidth, dispH = canvas.clientHeight;
+      const GAP = 0.06;
+      if (activeLine==='l') crop.l = Math.max(0.01, Math.min(crop.r-GAP, pos.x/dispW));
+      if (activeLine==='r') crop.r = Math.min(0.99, Math.max(crop.l+GAP, pos.x/dispW));
+      if (activeLine==='t') crop.t = Math.max(0.01, Math.min(crop.b-GAP, pos.y/dispH));
+      if (activeLine==='b') crop.b = Math.min(0.99, Math.max(crop.t+GAP, pos.y/dispH));
+      drawCalCanvas(canvasId, getImg(), getCrop());
       tryDrawViz();
     }
 
     function onUp() { activeLine = null; }
 
-    // Pointer events (mouse + touch, unified)
-    canvas.addEventListener('pointerdown',  onDown);
-    canvas.addEventListener('pointermove',  onMove);
-    canvas.addEventListener('pointerup',    onUp);
+    canvas.addEventListener('pointerdown',   onDown);
+    canvas.addEventListener('pointermove',   onMove);
+    canvas.addEventListener('pointerup',     onUp);
     canvas.addEventListener('pointercancel', onUp);
-    // Touch fallback for older Safari
     canvas.addEventListener('touchstart', onDown, { passive: false });
     canvas.addEventListener('touchmove',  onMove, { passive: false });
     canvas.addEventListener('touchend',   onUp);
   }
 
   // ═══════════════════════════════════════════════════════
-  //  VISUALIZATION — COMPOSITE PREVIEW
+  //  COMPOSITE VIZ
   // ═══════════════════════════════════════════════════════
   function tryDrawViz() {
-    const { wallImg, hangImg, wallCrop, hangCrop } = vizData;
-    if (!wallImg) return; // need at least the wall photo
+    if (!vizData.wallImg || !vizData.wallW || !vizData.wallH) return;
 
-    const vizCanvas = document.getElementById('viz-canvas');
-    const dpr       = window.devicePixelRatio || 1;
-    const availW    = vizCanvas.parentElement.clientWidth;
-    const wallAspect = Math.min(vizData.wallH / vizData.wallW, 1.4);
-    const dispW     = availW;
-    const dispH     = Math.round(dispW * wallAspect);
+    const canvas   = document.getElementById('viz-canvas');
+    const dpr      = window.devicePixelRatio || 1;
+    const availW   = canvas.parentElement.clientWidth;
+    const dispW    = availW;
+    const dispH    = Math.round(dispW * Math.min(vizData.wallH / vizData.wallW, 1.4));
 
-    vizCanvas.style.width  = dispW + 'px';
-    vizCanvas.style.height = dispH + 'px';
-    vizCanvas.width  = dispW * dpr;
-    vizCanvas.height = dispH * dpr;
+    canvas.style.width  = dispW + 'px';
+    canvas.style.height = dispH + 'px';
+    canvas.width  = dispW * dpr;
+    canvas.height = dispH * dpr;
 
-    const ctx = vizCanvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // ── Draw wall photo, cropped to calibrated region, stretched to fill canvas ──
-    const wSrcX = wallCrop.l * wallImg.width;
-    const wSrcY = wallCrop.t * wallImg.height;
-    const wSrcW = (wallCrop.r - wallCrop.l) * wallImg.width;
-    const wSrcH = (wallCrop.b - wallCrop.t) * wallImg.height;
-    ctx.drawImage(wallImg, wSrcX, wSrcY, wSrcW, wSrcH, 0, 0, dispW, dispH);
+    // Draw wall photo (cropped to calibration region, stretched to fill)
+    const wc = vizData.wallCrop;
+    ctx.drawImage(vizData.wallImg,
+      wc.l * vizData.wallImg.width,
+      wc.t * vizData.wallImg.height,
+      (wc.r - wc.l) * vizData.wallImg.width,
+      (wc.b - wc.t) * vizData.wallImg.height,
+      0, 0, dispW, dispH);
 
-    // Scale: display pixels per inch
-    // The canvas represents wallW inches wide and wallH inches tall
     const xPx = dispW / vizData.wallW;
     const yPx = dispH / vizData.wallH;
 
-    // ── Draw hanging photo if loaded ──
-    if (hangImg) {
-      // Display size of the hanging
-      const hangDispW = vizData.frameW * xPx;
-      const hangDispH = vizData.frameH * yPx;
+    // Draw each calculated hanging
+    hangings.forEach((h, idx) => {
+      if (!h.result) return;
+      const r = h.result;
 
-      // Top-left position on canvas
-      // frameLeft is distance from left wall edge; frameTopH is height of frame top from floor
-      const hangX = vizData.frameLeft * xPx + dragOffset.x;
-      const hangY = (vizData.wallH - vizData.frameTopH) * yPx + dragOffset.y;
+      const hangX = r.frameLeft * xPx + h.dragOffset.x;
+      const hangY = (r.wallH - r.frameTopH) * yPx + h.dragOffset.y;
+      const hangW = r.frameW * xPx;
+      const hangH = r.frameH * yPx;
 
-      // Source region from hanging photo (calibrated crop)
-      const hSrcX = hangCrop.l * hangImg.width;
-      const hSrcY = hangCrop.t * hangImg.height;
-      const hSrcW = (hangCrop.r - hangCrop.l) * hangImg.width;
-      const hSrcH = (hangCrop.b - hangCrop.t) * hangImg.height;
+      const color = HANG_COLORS[idx % HANG_COLORS.length];
 
-      // Drop shadow
       ctx.save();
-      ctx.shadowColor     = 'rgba(0,0,0,0.45)';
-      ctx.shadowBlur      = 16;
-      ctx.shadowOffsetX   = 4;
-      ctx.shadowOffsetY   = 6;
-      ctx.drawImage(hangImg, hSrcX, hSrcY, hSrcW, hSrcH, hangX, hangY, hangDispW, hangDispH);
+      ctx.shadowColor = 'rgba(0,0,0,0.4)';
+      ctx.shadowBlur  = 14;
+      ctx.shadowOffsetX = 3;
+      ctx.shadowOffsetY = 5;
+
+      if (h.hangImg) {
+        const hc = h.hangCrop;
+        ctx.drawImage(h.hangImg,
+          hc.l * h.hangImg.width,
+          hc.t * h.hangImg.height,
+          (hc.r - hc.l) * h.hangImg.width,
+          (hc.b - hc.t) * h.hangImg.height,
+          hangX, hangY, hangW, hangH);
+      } else {
+        // Placeholder colored rectangle
+        ctx.fillStyle = color + 'cc'; // semi-transparent
+        ctx.fillRect(hangX, hangY, hangW, hangH);
+      }
       ctx.restore();
 
-      // Thin frame border for polish
-      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
-      ctx.lineWidth   = 1.5;
-      ctx.strokeRect(hangX, hangY, hangDispW, hangDispH);
-    }
+      // Border
+      const isSelected = h.id === selectedHangingId;
+      ctx.strokeStyle = isSelected ? '#ff9500' : 'rgba(0,0,0,0.3)';
+      ctx.lineWidth   = isSelected ? 2.5 : 1.5;
+      ctx.strokeRect(hangX, hangY, hangW, hangH);
+
+      // Label badge
+      const badgeFontSize = Math.max(10, Math.min(14, Math.round(hangW / 8)));
+      ctx.font = `700 ${badgeFontSize}px -apple-system,sans-serif`;
+      const labelText = h.label || ('Hanging ' + h.id);
+      const tw = ctx.measureText(labelText).width;
+      const bx = hangX + 6, by = hangY + 6;
+      const bw = tw + 10, bh = badgeFontSize + 8;
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.beginPath(); ctx.roundRect(bx, by, bw, bh, 4); ctx.fill();
+      ctx.fillStyle = 'white';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'left';
+      ctx.fillText(labelText, bx + 5, by + bh/2);
+    });
 
     document.getElementById('viz-preview-section').style.display = 'block';
   }
 
-  // ── Drag the hanging on the viz canvas ──
+  // ── Viz canvas drag ──
   function setupVizDrag() {
     const canvas = document.getElementById('viz-canvas');
 
+    function getHangingAtPoint(cx, cy) {
+      // Hit-test in reverse order (last rendered = topmost)
+      const xPx = canvas.clientWidth  / vizData.wallW;
+      const yPx = canvas.clientHeight / vizData.wallH;
+      for (let i = hangings.length - 1; i >= 0; i--) {
+        const h = hangings[i];
+        if (!h.result) continue;
+        const r = h.result;
+        const hx = r.frameLeft  * xPx + h.dragOffset.x;
+        const hy = (r.wallH - r.frameTopH) * yPx + h.dragOffset.y;
+        const hw = r.frameW * xPx;
+        const hh = r.frameH * yPx;
+        if (cx >= hx && cx <= hx + hw && cy >= hy && cy <= hy + hh) return h;
+      }
+      return null;
+    }
+
     canvas.addEventListener('pointerdown', e => {
-      if (!vizData.hangImg) return;
-      vizDragActive = true;
-      vizDragStart  = { x: e.clientX, y: e.clientY, ox: dragOffset.x, oy: dragOffset.y };
-      canvas.setPointerCapture(e.pointerId);
-      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const cx   = e.clientX - rect.left;
+      const cy   = e.clientY - rect.top;
+      const hit  = getHangingAtPoint(cx, cy);
+      if (hit) {
+        selectedHangingId = hit.id;
+        vizDragActive     = true;
+        vizDragStart      = { x: e.clientX, y: e.clientY, ox: hit.dragOffset.x, oy: hit.dragOffset.y };
+        canvas.setPointerCapture(e.pointerId);
+        e.preventDefault();
+        tryDrawViz(); // show selection highlight immediately
+      } else {
+        selectedHangingId = null;
+        tryDrawViz();
+      }
     });
 
     canvas.addEventListener('pointermove', e => {
-      if (!vizDragActive || !vizDragStart) return;
-      dragOffset.x = vizDragStart.ox + (e.clientX - vizDragStart.x);
-      dragOffset.y = vizDragStart.oy + (e.clientY - vizDragStart.y);
+      if (!vizDragActive || !vizDragStart || !selectedHangingId) return;
+      const h = getHangingById(selectedHangingId);
+      if (!h) return;
+      h.dragOffset.x = vizDragStart.ox + (e.clientX - vizDragStart.x);
+      h.dragOffset.y = vizDragStart.oy + (e.clientY - vizDragStart.y);
       tryDrawViz();
       e.preventDefault();
     });
 
     canvas.addEventListener('pointerup', () => {
       vizDragActive = false;
-      const moved = Math.abs(dragOffset.x) > 3 || Math.abs(dragOffset.y) > 3;
-      document.getElementById('reset-pos-btn').style.display = moved ? 'block' : 'none';
+      const anyMoved = hangings.some(h => Math.abs(h.dragOffset.x) > 3 || Math.abs(h.dragOffset.y) > 3);
+      document.getElementById('reset-pos-btn').style.display = anyMoved ? 'block' : 'none';
     });
 
     canvas.addEventListener('pointercancel', () => { vizDragActive = false; });
   }
 
   function resetVizPosition() {
-    dragOffset = { x: 0, y: 0 };
+    hangings.forEach(h => h.dragOffset = { x: 0, y: 0 });
     tryDrawViz();
     document.getElementById('reset-pos-btn').style.display = 'none';
   }
 
   // ═══════════════════════════════════════════════════════
-  //  INIT — attach drag listeners once DOM is ready
+  //  INIT
   // ═══════════════════════════════════════════════════════
   document.addEventListener('DOMContentLoaded', function () {
-    setupCalDrag('wall-cal-canvas', 'wallImg', 'wallCrop');
-    setupCalDrag('hang-cal-canvas', 'hangImg', 'hangCrop');
+    setupCalDrag('wall-cal-canvas',
+      () => vizData.wallImg,
+      () => vizData.wallCrop);
     setupVizDrag();
+    addHanging(); // start with one card
   });
 </script>
 
