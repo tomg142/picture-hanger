@@ -90,7 +90,6 @@
 
     .row { display: flex; gap: 12px; }
     .field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-
     label { font-size: 14px; font-weight: 500; }
 
     .hint {
@@ -107,7 +106,7 @@
       border: 1.5px solid var(--border);
       border-radius: 8px;
       padding: 0 12px;
-      font-size: 16px; /* 16px prevents iOS zoom-on-focus */
+      font-size: 16px;
       color: var(--text);
       background: var(--bg);
       -webkit-appearance: none;
@@ -119,7 +118,6 @@
       border-color: var(--accent);
       background: white;
     }
-
     select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='%236c6c70' d='M6 7L0 0h12z'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
@@ -203,7 +201,6 @@
 
     /* ── Results ── */
     #results { display: none; }
-
     .result-item {
       display: flex;
       align-items: flex-start;
@@ -212,7 +209,6 @@
       border-bottom: 1px solid var(--border);
     }
     .result-item:last-of-type { border-bottom: none; }
-
     .result-icon {
       width: 30px; height: 30px;
       border-radius: 50%;
@@ -226,7 +222,7 @@
     .result-value { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
     .result-sub   { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
 
-    /* ── Diagram ── */
+    /* ── Schematic diagram ── */
     #diagram-canvas { width: 100%; border-radius: 8px; display: block; margin-top: 14px; }
 
     /* ── iPhone tip ── */
@@ -241,6 +237,85 @@
       margin-top: 14px;
     }
     #iphone-tip strong { display: block; margin-bottom: 3px; font-size: 14px; }
+
+    /* ── Visualize card ── */
+    #visualize-card { display: none; }
+
+    .viz-sub-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      margin-top: 16px;
+    }
+    .viz-sub-title:first-of-type { margin-top: 0; }
+
+    .photo-upload-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      height: 48px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1.5px dashed var(--accent);
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+    .photo-upload-btn:active { opacity: 0.75; }
+
+    .cal-wrapper { margin-top: 10px; display: none; }
+
+    .cal-canvas {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    .cal-hint {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 6px;
+      line-height: 1.4;
+    }
+
+    #viz-preview-section { display: none; margin-top: 18px; }
+
+    #viz-canvas {
+      width: 100%;
+      border-radius: 8px;
+      display: block;
+      margin-top: 8px;
+      touch-action: none;
+      cursor: grab;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.18);
+    }
+    #viz-canvas:active { cursor: grabbing; }
+
+    .btn-reset {
+      margin-top: 10px;
+      padding: 9px 18px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: none;
+    }
+    .btn-reset:active { background: var(--border); }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
   </style>
 </head>
 <body>
@@ -293,13 +368,11 @@
   <!-- DESIRED POSITION -->
   <div class="card">
     <div class="card-title">Desired Position</div>
-
     <div class="field" style="margin-bottom:14px;">
       <label for="desiredCenter">Center height from floor <span id="unit-display" style="font-weight:400;color:var(--text-secondary)">(inches)</span></label>
       <input type="number" id="desiredCenter" value="57" min="1" inputmode="decimal">
-      <p class="hint" id="hint-center">Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your eye level or preference.</p>
+      <p class="hint" id="hint-center">Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your preference.</p>
     </div>
-
     <div>
       <label style="display:block; margin-bottom:8px;">Horizontal placement</label>
       <div class="radio-group">
@@ -336,7 +409,6 @@
       </select>
     </div>
 
-    <!-- Single hook -->
     <div class="hanger-fields" id="fields-single">
       <div class="field">
         <label for="singleDist">Distance from top of frame to hook</label>
@@ -345,11 +417,10 @@
       </div>
     </div>
 
-    <!-- Wire -->
     <div class="hanger-fields hidden" id="fields-wire">
       <div class="info-box">
         <strong>How to measure the wire distance:</strong>
-        Flip the hanging face-down. Pull the wire up from the center with one finger until it's taut. Measure from the <strong>top edge of the frame</strong> straight down to the highest point of the wire at your finger. That's your wire distance.
+        Flip the hanging face-down. Pull the wire up from the center with one finger until it's taut. Measure from the <strong>top edge of the frame</strong> straight down to the highest point of the wire at your finger.
       </div>
       <div class="field">
         <label for="wireDist">Distance from top of frame to wire peak</label>
@@ -357,7 +428,6 @@
       </div>
     </div>
 
-    <!-- Two hooks -->
     <div class="hanger-fields hidden" id="fields-double">
       <div class="field">
         <label for="doubleDist">Distance from top of frame to hooks</label>
@@ -371,46 +441,102 @@
       </div>
     </div>
 
-    <!-- Sawtooth -->
     <div class="hanger-fields hidden" id="fields-sawtooth">
       <div class="field">
         <label for="sawtoothDist">Distance from top of frame to sawtooth strip</label>
         <input type="number" id="sawtoothDist" placeholder="e.g. 0.5" min="0" inputmode="decimal">
-        <p class="hint">Measure from the <strong>top edge</strong> of the frame down to the top of the sawtooth strip. Usually just a few millimetres.</p>
+        <p class="hint">Measure from the <strong>top edge</strong> of the frame down to the top of the sawtooth strip.</p>
       </div>
     </div>
   </div>
 
   <div id="global-error"></div>
-
   <button class="btn-calculate" onclick="calculate()">Calculate Nail Placement</button>
 
-  <!-- RESULTS -->
+  <!-- RESULTS (schematic) -->
   <div class="card" id="results">
     <div class="card-title">Results</div>
     <div id="result-items"></div>
     <canvas id="diagram-canvas"></canvas>
     <div id="iphone-tip">
       <strong>Using this on your iPhone?</strong>
-      In Safari, tap the <strong>Share</strong> button (the box with an arrow) → <strong>Add to Home Screen</strong>. The app will appear as an icon and open full-screen like a native app.
+      In Safari, tap the <strong>Share</strong> button → <strong>Add to Home Screen</strong>. The app will appear as an icon and open full-screen.
+    </div>
+  </div>
+
+  <!-- VISUALIZE ON YOUR WALL -->
+  <div class="card" id="visualize-card">
+    <div class="card-title">Preview on Your Wall</div>
+
+    <!-- Wall photo -->
+    <div class="viz-sub-title">Wall Photo</div>
+    <label class="photo-upload-btn">
+      📷 &nbsp;Upload Wall Photo
+      <input type="file" accept="image/*" id="wall-photo-input" style="display:none"
+             onchange="onWallPhotoChange(this)">
+    </label>
+    <div class="cal-wrapper" id="wall-cal-wrapper">
+      <canvas id="wall-cal-canvas" class="cal-canvas"></canvas>
+      <p class="cal-hint">Drag the blue lines to align with the four edges of your wall</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Hanging photo -->
+    <div class="viz-sub-title">Hanging Photo</div>
+    <label class="photo-upload-btn">
+      🖼 &nbsp;Upload Hanging Photo
+      <input type="file" accept="image/*" id="hang-photo-input" style="display:none"
+             onchange="onHangPhotoChange(this)">
+    </label>
+    <div class="cal-wrapper" id="hang-cal-wrapper">
+      <canvas id="hang-cal-canvas" class="cal-canvas"></canvas>
+      <p class="cal-hint">Drag the blue lines to align with the four outer edges of the hanging</p>
+    </div>
+
+    <!-- Preview -->
+    <div id="viz-preview-section">
+      <div class="divider"></div>
+      <div class="viz-sub-title">Preview</div>
+      <p class="cal-hint">Drag the hanging to fine-tune its position on the wall</p>
+      <canvas id="viz-canvas"></canvas>
+      <button class="btn-reset" id="reset-pos-btn" onclick="resetVizPosition()">Reset Position</button>
     </div>
   </div>
 
 </main>
 
 <script>
-  // ── State ──────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════
+  //  STATE
+  // ═══════════════════════════════════════════════════════
   let unit = 'in';
 
-  // ── Unit toggle ────────────────────────────────────────
+  // Visualization state — populated when calculate() runs and photos are loaded
+  let vizData = {
+    wallImg: null,
+    hangImg: null,
+    wallCrop: { l: 0.05, r: 0.95, t: 0.05, b: 0.95 },
+    hangCrop: { l: 0.05, r: 0.95, t: 0.05, b: 0.95 },
+    // Calc results:
+    wallW: 0, wallH: 0, frameW: 0, frameH: 0,
+    frameLeft: 0, frameTopH: 0, frameCenterX: 0,
+    nailH: 0, hangerType: '', leftNailX: 0, rightNailX: 0
+  };
+
+  let dragOffset     = { x: 0, y: 0 };
+  let vizDragActive  = false;
+  let vizDragStart   = null;
+
+  // ═══════════════════════════════════════════════════════
+  //  UNIT TOGGLE
+  // ═══════════════════════════════════════════════════════
   function setUnit(u) {
     unit = u;
     document.getElementById('btn-in').classList.toggle('active', u === 'in');
     document.getElementById('btn-cm').classList.toggle('active', u === 'cm');
     document.getElementById('unit-display').textContent = u === 'in' ? '(inches)' : '(cm)';
     document.getElementById('unit-label-offset').textContent = u === 'in' ? 'in' : 'cm';
-
-    // Update defaults and hints
     if (u === 'in') {
       document.getElementById('desiredCenter').value = 57;
       document.getElementById('wallHeight').placeholder = 'e.g. 96';
@@ -418,7 +544,7 @@
       document.getElementById('hint-wall').innerHTML =
         'Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).';
       document.getElementById('hint-center').innerHTML =
-        'Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your eye level or preference.';
+        'Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your preference.';
     } else {
       document.getElementById('desiredCenter').value = 145;
       document.getElementById('wallHeight').placeholder = 'e.g. 244';
@@ -426,26 +552,25 @@
       document.getElementById('hint-wall').innerHTML =
         'Measure the full width and height of your wall. Standard ceiling is <strong>244 cm</strong> (8&nbsp;ft).';
       document.getElementById('hint-center').innerHTML =
-        'Gallery standard is <strong>145 cm</strong> from floor to center of the art. Adjust to your eye level or preference.';
+        'Gallery standard is <strong>145 cm</strong> from floor to center of the art. Adjust to your preference.';
     }
   }
 
-  // ── Horizontal position radio ──────────────────────────
+  // ═══════════════════════════════════════════════════════
+  //  FORM HELPERS
+  // ═══════════════════════════════════════════════════════
   function onHPosChange() {
     const val = document.querySelector('input[name="hpos"]:checked').value;
     document.getElementById('opt-center').classList.toggle('selected', val === 'center');
     document.getElementById('opt-custom').classList.toggle('selected', val === 'custom');
   }
 
-  // ── Hanger type switch ─────────────────────────────────
   function showHangerInputs() {
     const type = document.getElementById('hangerType').value;
-    ['single','wire','double','sawtooth'].forEach(t => {
-      document.getElementById('fields-' + t).classList.toggle('hidden', t !== type);
-    });
+    ['single','wire','double','sawtooth'].forEach(t =>
+      document.getElementById('fields-' + t).classList.toggle('hidden', t !== type));
   }
 
-  // ── Helpers ────────────────────────────────────────────
   function getNum(id) { return parseFloat(document.getElementById(id).value); }
 
   function fmt(n) {
@@ -453,14 +578,13 @@
     return unit === 'in' ? r + '"' : r + ' cm';
   }
 
-  // Express decimal inches as nearest common fraction (e.g. 52.5 → 52½")
   function fmtFraction(n) {
     if (unit !== 'in') return fmt(n);
     const whole = Math.floor(n);
     const dec   = n - whole;
     const fracs = [
-      [7/8, '⅞'], [3/4, '¾'], [5/8, '⅝'], [1/2, '½'],
-      [3/8, '⅜'], [1/4, '¼'], [1/8, '⅛'],
+      [7/8,'⅞'],[3/4,'¾'],[5/8,'⅝'],[1/2,'½'],
+      [3/8,'⅜'],[1/4,'¼'],[1/8,'⅛'],
     ];
     for (const [v, s] of fracs) {
       if (Math.abs(dec - v) < 0.04) return (whole || '') + s + '"';
@@ -474,12 +598,13 @@
     el.style.display = msg ? 'block' : 'none';
   }
 
-  // ── Main calculation ───────────────────────────────────
+  // ═══════════════════════════════════════════════════════
+  //  CALCULATE
+  // ═══════════════════════════════════════════════════════
   function calculate() {
     showError('');
     document.getElementById('results').style.display = 'none';
 
-    // Collect inputs
     const wallW     = getNum('wallWidth');
     const wallH     = getNum('wallHeight');
     const frameW    = getNum('frameWidth');
@@ -488,7 +613,6 @@
     const hposType  = document.querySelector('input[name="hpos"]:checked').value;
     const hangerType = document.getElementById('hangerType').value;
 
-    // Validate common fields
     const missing = [];
     if (isNaN(wallW)   || wallW   <= 0) missing.push('Wall width');
     if (isNaN(wallH)   || wallH   <= 0) missing.push('Wall height');
@@ -496,10 +620,7 @@
     if (isNaN(frameH)  || frameH  <= 0) missing.push('Hanging height');
     if (isNaN(centerH) || centerH <= 0) missing.push('Desired center height');
 
-    // Collect hanger-specific inputs
-    let distFromTop = 0;
-    let hookSpacing = 0;
-
+    let distFromTop = 0, hookSpacing = 0;
     if (hangerType === 'single') {
       distFromTop = getNum('singleDist');
       if (isNaN(distFromTop) || distFromTop < 0) missing.push('Distance from top to hook');
@@ -516,30 +637,17 @@
       if (isNaN(hookSpacing) || hookSpacing <= 0) missing.push('Hook spacing');
     }
 
-    if (missing.length) {
-      showError('Please fill in: ' + missing.join(', ') + '.');
-      return;
-    }
+    if (missing.length) { showError('Please fill in: ' + missing.join(', ') + '.'); return; }
+    if (frameW >= wallW)      { showError('The hanging (' + fmt(frameW) + ' wide) is wider than the wall (' + fmt(wallW) + ').'); return; }
+    if (frameH >= wallH)      { showError('The hanging (' + fmt(frameH) + ' tall) is taller than the wall (' + fmt(wallH) + ').'); return; }
+    if (distFromTop > frameH) { showError('The hanger measurement (' + fmt(distFromTop) + ') is greater than the hanging height (' + fmt(frameH) + ').'); return; }
+    if (hangerType === 'double' && hookSpacing >= frameW) { showError('The hook spacing (' + fmt(hookSpacing) + ') is wider than the frame (' + fmt(frameW) + ').'); return; }
 
-    // Sanity checks
-    if (frameW >= wallW)       { showError('The hanging (' + fmt(frameW) + ' wide) is wider than the wall (' + fmt(wallW) + '). Check your measurements.'); return; }
-    if (frameH >= wallH)       { showError('The hanging (' + fmt(frameH) + ' tall) is taller than the wall (' + fmt(wallH) + '). Check your measurements.'); return; }
-    if (distFromTop > frameH)  { showError('The hanger measurement (' + fmt(distFromTop) + ') is greater than the hanging height (' + fmt(frameH) + '). Check your measurements.'); return; }
-    if (hangerType === 'double' && hookSpacing >= frameW) {
-      showError('The hook spacing (' + fmt(hookSpacing) + ') is wider than the frame itself (' + fmt(frameW) + '). Check your measurements.');
-      return;
-    }
-
-    // ── Core math ──
-    // nail height from floor = desired_center + frame_height/2 - dist_from_top
-    // Derivation: frame_top = nail_height + dist_from_top
-    //             frame_center = frame_top - frame_height/2 = desired_center  →  solve for nail_height
+    // Core math: nail height from floor = desiredCenter + frameH/2 - distFromTop
     const nailH = centerH + frameH / 2 - distFromTop;
+    if (nailH <= 0)    { showError('The nail height comes out below the floor. The desired center height may be too low.'); return; }
+    if (nailH > wallH) { showError('The nail height (' + fmt(nailH) + ') would be above the wall. Try lowering the desired center height.'); return; }
 
-    if (nailH <= 0)   { showError('The nail height comes out below the floor (' + fmt(nailH) + '). Your desired center height may be too low relative to the hanger position.'); return; }
-    if (nailH > wallH) { showError('The nail height (' + fmt(nailH) + ') would be above the wall (' + fmt(wallH) + '). Try lowering the desired center height.'); return; }
-
-    // Horizontal position of hanging's center
     let frameCenterX;
     if (hposType === 'center') {
       frameCenterX = wallW / 2;
@@ -548,86 +656,66 @@
       if (isNaN(frameCenterX) || frameCenterX <= 0) { showError('Please enter the custom horizontal offset.'); return; }
     }
 
-    // Frame edges
     const frameLeft  = frameCenterX - frameW / 2;
     const frameRight = frameCenterX + frameW / 2;
-    if (frameLeft < 0)      { showError('The hanging extends ' + fmt(-frameLeft) + ' past the left wall edge at this position. Try centering it or adjusting the offset.'); return; }
-    if (frameRight > wallW) { showError('The hanging extends ' + fmt(frameRight - wallW) + ' past the right wall edge at this position. Try centering it or adjusting the offset.'); return; }
+    if (frameLeft < 0)      { showError('The hanging extends ' + fmt(-frameLeft) + ' past the left wall edge.'); return; }
+    if (frameRight > wallW) { showError('The hanging extends ' + fmt(frameRight - wallW) + ' past the right wall edge.'); return; }
 
-    // Two-hook nail positions
-    let leftNailX, rightNailX;
+    let leftNailX = 0, rightNailX = 0;
     if (hangerType === 'double') {
       leftNailX  = frameCenterX - hookSpacing / 2;
       rightNailX = frameCenterX + hookSpacing / 2;
-      if (leftNailX <= 0 || rightNailX >= wallW) {
-        showError('With this hook spacing and position, the nails fall outside the wall. Check your measurements.');
-        return;
-      }
+      if (leftNailX <= 0 || rightNailX >= wallW) { showError('With this hook spacing, the nails fall outside the wall.'); return; }
     }
 
-    const frameTopH = nailH + distFromTop; // height of frame top from floor
+    const frameTopH = nailH + distFromTop;
 
-    // ── Render results ──
+    // ── Render result items ──
     const items = document.getElementById('result-items');
     items.innerHTML = '';
-
     function addResult(icon, label, mainVal, sub) {
-      const subHtml = sub ? `<div class="result-sub">${sub}</div>` : '';
       items.insertAdjacentHTML('beforeend', `
         <div class="result-item">
           <div class="result-icon">${icon}</div>
           <div>
             <div class="result-label">${label}</div>
             <div class="result-value">${mainVal}</div>
-            ${subHtml}
+            ${sub ? '<div class="result-sub">' + sub + '</div>' : ''}
           </div>
         </div>`);
     }
 
     if (hangerType === 'double') {
-      addResult('✓', 'Left nail — height from floor',
-        fmtFraction(nailH),
-        fmtFraction(leftNailX) + ' from the left wall edge');
-      addResult('✓', 'Right nail — height from floor',
-        fmtFraction(nailH),
-        fmtFraction(rightNailX) + ' from the left wall edge');
+      addResult('✓', 'Left nail — height from floor',  fmtFraction(nailH), fmtFraction(leftNailX)  + ' from the left wall edge');
+      addResult('✓', 'Right nail — height from floor', fmtFraction(nailH), fmtFraction(rightNailX) + ' from the left wall edge');
     } else {
-      addResult('✓', 'Nail height from floor',
-        fmtFraction(nailH),
-        'Nail goes ' + fmtFraction(frameCenterX) + ' from the left wall edge');
+      addResult('✓', 'Nail height from floor', fmtFraction(nailH), 'Nail goes ' + fmtFraction(frameCenterX) + ' from the left wall edge');
     }
+    addResult('↕', 'Frame top will be at', fmtFraction(frameTopH) + ' from floor', 'Frame bottom at ' + fmtFraction(frameTopH - frameH) + ' from floor');
+    addResult('⬇', 'Or measure down from ceiling', fmtFraction(wallH - nailH), 'Whichever is easier to measure');
 
-    addResult('↕', 'Frame top will be at',
-      fmtFraction(frameTopH) + ' from floor',
-      'Frame bottom at ' + fmtFraction(frameTopH - frameH) + ' from floor');
-
-    // Also show from-ceiling measurement (sometimes easier to mark)
-    const nailFromCeiling = wallH - nailH;
-    addResult('⬇', 'Or measure down from ceiling',
-      fmtFraction(nailFromCeiling),
-      'Whichever is easier to measure with your tape');
-
-    // ── Draw diagram ──
-    drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH,
-                frameCenterX, nailH, hangerType, leftNailX, rightNailX, hookSpacing);
+    // ── Schematic diagram ──
+    drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX);
 
     document.getElementById('results').style.display = 'block';
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    // ── Init visualization card ──
+    initVizCard({ wallW, wallH, frameW, frameH, frameLeft, frameTopH, frameCenterX, nailH, hangerType, leftNailX, rightNailX });
   }
 
-  // ── Canvas diagram ─────────────────────────────────────
+  // ═══════════════════════════════════════════════════════
+  //  SCHEMATIC DIAGRAM (unchanged from original)
+  // ═══════════════════════════════════════════════════════
   function drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH,
                        frameCenterX, nailH, hangerType, leftNailX, rightNailX) {
-
     const canvas = document.getElementById('diagram-canvas');
     const ctx    = canvas.getContext('2d');
     const dpr    = window.devicePixelRatio || 1;
-
-    // Size: fill card width, maintain wall aspect ratio (capped so it's not too tall)
-    const availW  = canvas.parentElement.clientWidth - 32;
-    const aspect  = Math.min(wallH / wallW, 1.2); // cap extreme tall walls
-    const dispW   = availW;
-    const dispH   = Math.round(dispW * aspect);
+    const availW = canvas.parentElement.clientWidth - 32;
+    const aspect = Math.min(wallH / wallW, 1.2);
+    const dispW  = availW;
+    const dispH  = Math.round(dispW * aspect);
 
     canvas.style.width  = dispW + 'px';
     canvas.style.height = dispH + 'px';
@@ -635,133 +723,360 @@
     canvas.height = dispH * dpr;
     ctx.scale(dpr, dpr);
 
-    // Scale factor: wall units → pixels
     const scale = dispW / wallW;
-
-    // Convert "inches from floor" to canvas Y (canvas Y=0 is wall top)
     function wx(x) { return x * scale; }
     function wy(y) { return dispH - y * scale; }
 
-    // ── Background: wall ──
     ctx.fillStyle = '#f0ede6';
     ctx.fillRect(0, 0, dispW, dispH);
-
-    // Wall border
-    ctx.strokeStyle = '#9a8a7a';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#9a8a7a'; ctx.lineWidth = 2;
     ctx.strokeRect(1, 1, dispW - 2, dispH - 2);
 
-    // Floor line label
     ctx.fillStyle = '#aaa';
     ctx.font = `${Math.max(9, Math.round(dispW / 38))}px -apple-system,sans-serif`;
     ctx.textAlign = 'center';
     ctx.fillText('floor', dispW / 2, dispH - 3);
 
-    // ── Frame rectangle ──
-    const fL = wx(frameLeft);
-    const fT = wy(frameTopH);          // canvas y of frame top edge
-    const fW = frameW * scale;
-    const fH = frameH * scale;
+    const fL = wx(frameLeft), fT = wy(frameTopH);
+    const fW = frameW * scale,  fH = frameH * scale;
 
     ctx.fillStyle = '#d0e8ff';
     ctx.fillRect(fL, fT, fW, fH);
-    ctx.strokeStyle = '#007aff';
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#007aff'; ctx.lineWidth = 2;
     ctx.strokeRect(fL, fT, fW, fH);
 
-    // Dashed center lines on frame
-    ctx.strokeStyle = 'rgba(0,122,255,0.35)';
-    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(0,122,255,0.35)'; ctx.lineWidth = 1;
     ctx.setLineDash([3, 3]);
     ctx.beginPath();
-    ctx.moveTo(fL + fW / 2, fT);   ctx.lineTo(fL + fW / 2, fT + fH); // vertical center
-    ctx.moveTo(fL, fT + fH / 2);   ctx.lineTo(fL + fW, fT + fH / 2); // horizontal center
+    ctx.moveTo(fL + fW/2, fT); ctx.lineTo(fL + fW/2, fT + fH);
+    ctx.moveTo(fL, fT + fH/2); ctx.lineTo(fL + fW, fT + fH/2);
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Frame label
     const fontSize = Math.max(10, Math.round(dispW / 32));
     ctx.font = `600 ${fontSize}px -apple-system,sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#005acc';
-    if (fH > fontSize * 2.2 && fW > 50) {
-      ctx.fillText('Hanging', fL + fW / 2, fT + fH / 2);
-    }
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#005acc';
+    if (fH > fontSize * 2.2 && fW > 50) ctx.fillText('Hanging', fL + fW/2, fT + fH/2);
 
-    // ── Nail(s) ──
-    function drawNail(nx, ny) {
-      const cx = wx(nx);
-      const cy = wy(ny);
-      // Red circle
+    function drawNailDot(nx, ny) {
+      const cx = wx(nx), cy = wy(ny);
       ctx.fillStyle = '#ff3b30';
-      ctx.beginPath();
-      ctx.arc(cx, cy, 5 * dpr * 0.6, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#990000';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      // White X
+      ctx.beginPath(); ctx.arc(cx, cy, 5 * dpr * 0.6, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = '#990000'; ctx.lineWidth = 1; ctx.stroke();
       const r = 3 * dpr * 0.6;
-      ctx.strokeStyle = 'white';
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = 'white'; ctx.lineWidth = 1.5;
       ctx.beginPath();
-      ctx.moveTo(cx - r, cy - r); ctx.lineTo(cx + r, cy + r);
-      ctx.moveTo(cx + r, cy - r); ctx.lineTo(cx - r, cy + r);
+      ctx.moveTo(cx-r, cy-r); ctx.lineTo(cx+r, cy+r);
+      ctx.moveTo(cx+r, cy-r); ctx.lineTo(cx-r, cy+r);
       ctx.stroke();
     }
+    if (hangerType === 'double') { drawNailDot(leftNailX, nailH); drawNailDot(rightNailX, nailH); }
+    else drawNailDot(frameCenterX, nailH);
 
-    if (hangerType === 'double') {
-      drawNail(leftNailX,  nailH);
-      drawNail(rightNailX, nailH);
-    } else {
-      drawNail(frameCenterX, nailH);
-    }
-
-    // ── Height annotation ──
-    // Vertical arrow on the right side showing nail height from floor
     const annotX = Math.min(wx(frameLeft + frameW) + 18, dispW - 28);
-    const nailCanvasY = wy(nailH);
-    const floorCanvasY = dispH - 2;
-
+    const nailCanvasY = wy(nailH), floorCanvasY = dispH - 2;
     if (annotX < dispW - 5) {
-      // Dashed vertical line
-      ctx.strokeStyle = '#34c759';
-      ctx.lineWidth   = 1.5;
+      ctx.strokeStyle = '#34c759'; ctx.lineWidth = 1.5;
       ctx.setLineDash([4, 3]);
-      ctx.beginPath();
-      ctx.moveTo(annotX, floorCanvasY);
-      ctx.lineTo(annotX, nailCanvasY);
-      ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(annotX, floorCanvasY); ctx.lineTo(annotX, nailCanvasY); ctx.stroke();
       ctx.setLineDash([]);
-
-      // Arrowheads
       ctx.fillStyle = '#34c759';
-      ctx.beginPath();
-      ctx.moveTo(annotX, nailCanvasY - 1);
-      ctx.lineTo(annotX - 4, nailCanvasY + 6);
-      ctx.lineTo(annotX + 4, nailCanvasY + 6);
-      ctx.fill();
-
-      // Measurement label
-      const labelFontSize = Math.max(9, Math.round(dispW / 34));
-      ctx.font = `700 ${labelFontSize}px -apple-system,sans-serif`;
-      ctx.textAlign   = 'left';
-      ctx.textBaseline = 'middle';
-      ctx.fillStyle   = '#1a7a35';
-
+      ctx.beginPath(); ctx.moveTo(annotX, nailCanvasY-1); ctx.lineTo(annotX-4, nailCanvasY+6); ctx.lineTo(annotX+4, nailCanvasY+6); ctx.fill();
+      const lfs = Math.max(9, Math.round(dispW / 34));
+      ctx.font = `700 ${lfs}px -apple-system,sans-serif`;
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
       const midY = (nailCanvasY + floorCanvasY) / 2;
-      const labelText = fmtFraction(nailH);
-      // Background pill for readability
-      const tw = ctx.measureText(labelText).width;
+      const txt  = fmtFraction(nailH);
+      const tw   = ctx.measureText(txt).width;
       ctx.fillStyle = 'rgba(255,255,255,0.85)';
-      ctx.beginPath();
-      ctx.roundRect(annotX + 4, midY - labelFontSize * 0.75, tw + 8, labelFontSize * 1.5, 4);
-      ctx.fill();
+      ctx.beginPath(); ctx.roundRect(annotX+4, midY-lfs*0.75, tw+8, lfs*1.5, 4); ctx.fill();
       ctx.fillStyle = '#1a7a35';
-      ctx.fillText(labelText, annotX + 8, midY);
+      ctx.fillText(txt, annotX+8, midY);
     }
   }
+
+  // ═══════════════════════════════════════════════════════
+  //  VISUALIZATION — INIT
+  // ═══════════════════════════════════════════════════════
+  function initVizCard(results) {
+    Object.assign(vizData, results);
+    dragOffset = { x: 0, y: 0 };
+    document.getElementById('reset-pos-btn').style.display = 'none';
+    document.getElementById('visualize-card').style.display = 'block';
+    // Re-draw calibration canvases in case dimensions changed
+    if (vizData.wallImg) drawCalCanvas('wall-cal-canvas', 'wallImg', 'wallCrop');
+    if (vizData.hangImg) drawCalCanvas('hang-cal-canvas', 'hangImg', 'hangCrop');
+    tryDrawViz();
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  VISUALIZATION — PHOTO LOADING
+  // ═══════════════════════════════════════════════════════
+  function onWallPhotoChange(input) {
+    const file = input.files[0];
+    if (!file) return;
+    createImageBitmap(file).then(bmp => {
+      vizData.wallImg  = bmp;
+      vizData.wallCrop = { l: 0.05, r: 0.95, t: 0.05, b: 0.95 };
+      const wrapper = document.getElementById('wall-cal-wrapper');
+      wrapper.style.display = 'block';
+      drawCalCanvas('wall-cal-canvas', 'wallImg', 'wallCrop');
+      tryDrawViz();
+    }).catch(() => alert('Could not load that image. Please try another file.'));
+  }
+
+  function onHangPhotoChange(input) {
+    const file = input.files[0];
+    if (!file) return;
+    createImageBitmap(file).then(bmp => {
+      vizData.hangImg  = bmp;
+      vizData.hangCrop = { l: 0.05, r: 0.95, t: 0.05, b: 0.95 };
+      const wrapper = document.getElementById('hang-cal-wrapper');
+      wrapper.style.display = 'block';
+      drawCalCanvas('hang-cal-canvas', 'hangImg', 'hangCrop');
+      tryDrawViz();
+    }).catch(() => alert('Could not load that image. Please try another file.'));
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  VISUALIZATION — CALIBRATION CANVAS
+  // ═══════════════════════════════════════════════════════
+  function drawCalCanvas(canvasId, imgKey, cropKey) {
+    const canvas = document.getElementById(canvasId);
+    const img    = vizData[imgKey];
+    const crop   = vizData[cropKey];
+    if (!img) return;
+
+    const dpr    = window.devicePixelRatio || 1;
+    const availW = canvas.parentElement.clientWidth;
+    const aspect = img.height / img.width;
+    const dispW  = availW;
+    const dispH  = Math.round(Math.min(dispW * aspect, 380));
+
+    canvas.style.width  = dispW + 'px';
+    canvas.style.height = dispH + 'px';
+    canvas.width  = dispW * dpr;
+    canvas.height = dispH * dpr;
+
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // Draw photo
+    ctx.drawImage(img, 0, 0, dispW, dispH);
+
+    // Pixel positions of lines
+    const lx = crop.l * dispW;
+    const rx = crop.r * dispW;
+    const ty = crop.t * dispH;
+    const by = crop.b * dispH;
+
+    // Darken outside the crop region
+    ctx.fillStyle = 'rgba(0,0,0,0.48)';
+    ctx.fillRect(0,  0,    dispW, ty);           // top strip
+    ctx.fillRect(0,  by,   dispW, dispH - by);   // bottom strip
+    ctx.fillRect(0,  ty,   lx,    by - ty);      // left strip
+    ctx.fillRect(rx, ty,   dispW - rx, by - ty); // right strip
+
+    // Crop lines
+    ctx.strokeStyle = '#00cfff';
+    ctx.lineWidth   = 2;
+    ctx.setLineDash([6, 4]);
+    const lines = [
+      [lx, 0, lx, dispH],
+      [rx, 0, rx, dispH],
+      [0, ty, dispW, ty],
+      [0, by, dispW, by],
+    ];
+    for (const [x1, y1, x2, y2] of lines) {
+      ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+
+    // Corner handles
+    for (const [cx, cy] of [[lx,ty],[rx,ty],[rx,by],[lx,by]]) {
+      ctx.fillStyle = '#00cfff';
+      ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2); ctx.fill();
+      ctx.strokeStyle = 'white'; ctx.lineWidth = 2; ctx.stroke();
+    }
+  }
+
+  // Attach drag handlers to a calibration canvas (called once on page load)
+  function setupCalDrag(canvasId, imgKey, cropKey) {
+    const canvas = document.getElementById(canvasId);
+    let activeLine = null; // 'l' | 'r' | 't' | 'b'
+
+    function clientToCanvas(e) {
+      const rect    = canvas.getBoundingClientRect();
+      const src     = e.touches ? e.touches[0] : e;
+      return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+    }
+
+    function nearLine(x, y) {
+      if (!vizData[imgKey]) return null;
+      const crop  = vizData[cropKey];
+      const dispW = canvas.clientWidth;
+      const dispH = canvas.clientHeight;
+      const HIT   = 28; // px hit area
+      const candidates = [
+        { id: 'l', d: Math.abs(x - crop.l * dispW) },
+        { id: 'r', d: Math.abs(x - crop.r * dispW) },
+        { id: 't', d: Math.abs(y - crop.t * dispH) },
+        { id: 'b', d: Math.abs(y - crop.b * dispH) },
+      ];
+      const best = candidates.reduce((a, b) => a.d < b.d ? a : b);
+      return best.d < HIT ? best.id : null;
+    }
+
+    function onDown(e) {
+      const pos = clientToCanvas(e);
+      activeLine = nearLine(pos.x, pos.y);
+      if (activeLine) {
+        e.preventDefault();
+        if (e.pointerId != null) canvas.setPointerCapture(e.pointerId);
+      }
+    }
+
+    function onMove(e) {
+      if (!activeLine) return;
+      e.preventDefault();
+      const pos   = clientToCanvas(e);
+      const crop  = vizData[cropKey];
+      const dispW = canvas.clientWidth;
+      const dispH = canvas.clientHeight;
+      const MIN_GAP = 0.06;
+      if (activeLine === 'l') crop.l = Math.max(0.01, Math.min(crop.r - MIN_GAP, pos.x / dispW));
+      if (activeLine === 'r') crop.r = Math.min(0.99, Math.max(crop.l + MIN_GAP, pos.x / dispW));
+      if (activeLine === 't') crop.t = Math.max(0.01, Math.min(crop.b - MIN_GAP, pos.y / dispH));
+      if (activeLine === 'b') crop.b = Math.min(0.99, Math.max(crop.t + MIN_GAP, pos.y / dispH));
+      drawCalCanvas(canvasId, imgKey, cropKey);
+      tryDrawViz();
+    }
+
+    function onUp() { activeLine = null; }
+
+    // Pointer events (mouse + touch, unified)
+    canvas.addEventListener('pointerdown',  onDown);
+    canvas.addEventListener('pointermove',  onMove);
+    canvas.addEventListener('pointerup',    onUp);
+    canvas.addEventListener('pointercancel', onUp);
+    // Touch fallback for older Safari
+    canvas.addEventListener('touchstart', onDown, { passive: false });
+    canvas.addEventListener('touchmove',  onMove, { passive: false });
+    canvas.addEventListener('touchend',   onUp);
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  VISUALIZATION — COMPOSITE PREVIEW
+  // ═══════════════════════════════════════════════════════
+  function tryDrawViz() {
+    const { wallImg, hangImg, wallCrop, hangCrop } = vizData;
+    if (!wallImg) return; // need at least the wall photo
+
+    const vizCanvas = document.getElementById('viz-canvas');
+    const dpr       = window.devicePixelRatio || 1;
+    const availW    = vizCanvas.parentElement.clientWidth;
+    const wallAspect = Math.min(vizData.wallH / vizData.wallW, 1.4);
+    const dispW     = availW;
+    const dispH     = Math.round(dispW * wallAspect);
+
+    vizCanvas.style.width  = dispW + 'px';
+    vizCanvas.style.height = dispH + 'px';
+    vizCanvas.width  = dispW * dpr;
+    vizCanvas.height = dispH * dpr;
+
+    const ctx = vizCanvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+
+    // ── Draw wall photo, cropped to calibrated region, stretched to fill canvas ──
+    const wSrcX = wallCrop.l * wallImg.width;
+    const wSrcY = wallCrop.t * wallImg.height;
+    const wSrcW = (wallCrop.r - wallCrop.l) * wallImg.width;
+    const wSrcH = (wallCrop.b - wallCrop.t) * wallImg.height;
+    ctx.drawImage(wallImg, wSrcX, wSrcY, wSrcW, wSrcH, 0, 0, dispW, dispH);
+
+    // Scale: display pixels per inch
+    // The canvas represents wallW inches wide and wallH inches tall
+    const xPx = dispW / vizData.wallW;
+    const yPx = dispH / vizData.wallH;
+
+    // ── Draw hanging photo if loaded ──
+    if (hangImg) {
+      // Display size of the hanging
+      const hangDispW = vizData.frameW * xPx;
+      const hangDispH = vizData.frameH * yPx;
+
+      // Top-left position on canvas
+      // frameLeft is distance from left wall edge; frameTopH is height of frame top from floor
+      const hangX = vizData.frameLeft * xPx + dragOffset.x;
+      const hangY = (vizData.wallH - vizData.frameTopH) * yPx + dragOffset.y;
+
+      // Source region from hanging photo (calibrated crop)
+      const hSrcX = hangCrop.l * hangImg.width;
+      const hSrcY = hangCrop.t * hangImg.height;
+      const hSrcW = (hangCrop.r - hangCrop.l) * hangImg.width;
+      const hSrcH = (hangCrop.b - hangCrop.t) * hangImg.height;
+
+      // Drop shadow
+      ctx.save();
+      ctx.shadowColor     = 'rgba(0,0,0,0.45)';
+      ctx.shadowBlur      = 16;
+      ctx.shadowOffsetX   = 4;
+      ctx.shadowOffsetY   = 6;
+      ctx.drawImage(hangImg, hSrcX, hSrcY, hSrcW, hSrcH, hangX, hangY, hangDispW, hangDispH);
+      ctx.restore();
+
+      // Thin frame border for polish
+      ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+      ctx.lineWidth   = 1.5;
+      ctx.strokeRect(hangX, hangY, hangDispW, hangDispH);
+    }
+
+    document.getElementById('viz-preview-section').style.display = 'block';
+  }
+
+  // ── Drag the hanging on the viz canvas ──
+  function setupVizDrag() {
+    const canvas = document.getElementById('viz-canvas');
+
+    canvas.addEventListener('pointerdown', e => {
+      if (!vizData.hangImg) return;
+      vizDragActive = true;
+      vizDragStart  = { x: e.clientX, y: e.clientY, ox: dragOffset.x, oy: dragOffset.y };
+      canvas.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    canvas.addEventListener('pointermove', e => {
+      if (!vizDragActive || !vizDragStart) return;
+      dragOffset.x = vizDragStart.ox + (e.clientX - vizDragStart.x);
+      dragOffset.y = vizDragStart.oy + (e.clientY - vizDragStart.y);
+      tryDrawViz();
+      e.preventDefault();
+    });
+
+    canvas.addEventListener('pointerup', () => {
+      vizDragActive = false;
+      const moved = Math.abs(dragOffset.x) > 3 || Math.abs(dragOffset.y) > 3;
+      document.getElementById('reset-pos-btn').style.display = moved ? 'block' : 'none';
+    });
+
+    canvas.addEventListener('pointercancel', () => { vizDragActive = false; });
+  }
+
+  function resetVizPosition() {
+    dragOffset = { x: 0, y: 0 };
+    tryDrawViz();
+    document.getElementById('reset-pos-btn').style.display = 'none';
+  }
+
+  // ═══════════════════════════════════════════════════════
+  //  INIT — attach drag listeners once DOM is ready
+  // ═══════════════════════════════════════════════════════
+  document.addEventListener('DOMContentLoaded', function () {
+    setupCalDrag('wall-cal-canvas', 'wallImg', 'wallCrop');
+    setupCalDrag('hang-cal-canvas', 'hangImg', 'hangCrop');
+    setupVizDrag();
+  });
 </script>
 
 </body>
