@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Hanger Helper">
+  <title>Picture Hanger Helper</title>
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card: #ffffff;
+      --accent: #007aff;
+      --accent-light: #e5f0ff;
+      --text: #1c1c1e;
+      --text-secondary: #6c6c70;
+      --border: #d1d1d6;
+      --success: #34c759;
+      --success-light: #e5f8eb;
+      --warn-bg: #fff8e6;
+      --warn-border: #ffd60a;
+      --warn-text: #7a5c00;
+      --radius: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 48px;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    header h1 { font-size: 19px; font-weight: 700; letter-spacing: -0.3px; }
+    header p  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    .unit-toggle {
+      display: flex;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .unit-toggle button {
+      padding: 6px 13px;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .unit-toggle button.active { background: var(--accent); color: white; }
+
+    /* ── Layout ── */
+    main { padding: 14px; max-width: 500px; margin: 0 auto; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .row { display: flex; gap: 12px; }
+    .field { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+
+    label { font-size: 14px; font-weight: 500; }
+
+    .hint {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-top: 1px;
+    }
+
+    /* ── Inputs ── */
+    input[type="number"], select {
+      width: 100%;
+      height: 44px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 16px; /* 16px prevents iOS zoom-on-focus */
+      color: var(--text);
+      background: var(--bg);
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.15s;
+    }
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: white;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath fill='%236c6c70' d='M6 7L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-color: var(--bg);
+      cursor: pointer;
+      padding-right: 36px;
+    }
+
+    /* ── Radio options ── */
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .radio-option.selected { border-color: var(--accent); background: var(--accent-light); }
+    .radio-option input[type="radio"] {
+      width: 18px; height: 18px;
+      accent-color: var(--accent);
+      cursor: pointer; flex-shrink: 0;
+    }
+    .radio-option .radio-label { font-size: 15px; line-height: 1.4; }
+    .custom-row {
+      display: flex; align-items: center; flex-wrap: wrap;
+      gap: 6px; margin-top: 6px;
+    }
+    .custom-row input[type="number"] {
+      width: 80px; height: 36px; font-size: 15px; flex-shrink: 0;
+    }
+    .custom-row span { font-size: 14px; color: var(--text); }
+
+    /* ── Hanger fields ── */
+    .hanger-fields { margin-top: 14px; display: flex; flex-direction: column; gap: 14px; }
+    .hanger-fields.hidden { display: none; }
+
+    .info-box {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      border-radius: 8px;
+      padding: 11px 13px;
+      font-size: 13px;
+      color: var(--warn-text);
+      line-height: 1.5;
+    }
+    .info-box strong { display: block; margin-bottom: 3px; }
+
+    /* ── Calculate button ── */
+    .btn-calculate {
+      width: 100%;
+      height: 52px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(0,122,255,0.28);
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-calculate:active { opacity: 0.85; transform: scale(0.99); }
+
+    /* ── Error ── */
+    #global-error {
+      background: #fff0f0;
+      border: 1px solid #ff3b30;
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: #cc0000;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* ── Results ── */
+    #results { display: none; }
+
+    .result-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .result-item:last-of-type { border-bottom: none; }
+
+    .result-icon {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--success-light);
+      color: var(--success);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .result-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 2px; }
+    .result-value { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; }
+    .result-sub   { font-size: 13px; color: var(--text-secondary); margin-top: 3px; }
+
+    /* ── Diagram ── */
+    #diagram-canvas { width: 100%; border-radius: 8px; display: block; margin-top: 14px; }
+
+    /* ── iPhone tip ── */
+    #iphone-tip {
+      background: var(--accent-light);
+      border: 1px solid #b0d0ff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+      color: #004499;
+      line-height: 1.5;
+      margin-top: 14px;
+    }
+    #iphone-tip strong { display: block; margin-bottom: 3px; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Picture Hanger Helper</h1>
+    <p>Find the exact nail placement</p>
+  </div>
+  <div class="unit-toggle">
+    <button id="btn-in" class="active" onclick="setUnit('in')">in</button>
+    <button id="btn-cm" onclick="setUnit('cm')">cm</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- WALL -->
+  <div class="card">
+    <div class="card-title">Wall Dimensions</div>
+    <div class="row">
+      <div class="field">
+        <label for="wallWidth">Width</label>
+        <input type="number" id="wallWidth" placeholder="e.g. 120" min="1" inputmode="decimal">
+      </div>
+      <div class="field">
+        <label for="wallHeight">Height</label>
+        <input type="number" id="wallHeight" placeholder="e.g. 96" min="1" inputmode="decimal">
+      </div>
+    </div>
+    <p class="hint" id="hint-wall">Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).</p>
+  </div>
+
+  <!-- HANGING -->
+  <div class="card">
+    <div class="card-title">Hanging Dimensions</div>
+    <div class="row">
+      <div class="field">
+        <label for="frameWidth">Width</label>
+        <input type="number" id="frameWidth" placeholder="e.g. 24" min="1" inputmode="decimal">
+      </div>
+      <div class="field">
+        <label for="frameHeight">Height</label>
+        <input type="number" id="frameHeight" placeholder="e.g. 18" min="1" inputmode="decimal">
+      </div>
+    </div>
+    <p class="hint">Measure the full outer dimensions of the frame or hanging.</p>
+  </div>
+
+  <!-- DESIRED POSITION -->
+  <div class="card">
+    <div class="card-title">Desired Position</div>
+
+    <div class="field" style="margin-bottom:14px;">
+      <label for="desiredCenter">Center height from floor <span id="unit-display" style="font-weight:400;color:var(--text-secondary)">(inches)</span></label>
+      <input type="number" id="desiredCenter" value="57" min="1" inputmode="decimal">
+      <p class="hint" id="hint-center">Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your eye level or preference.</p>
+    </div>
+
+    <div>
+      <label style="display:block; margin-bottom:8px;">Horizontal placement</label>
+      <div class="radio-group">
+        <label class="radio-option selected" id="opt-center">
+          <input type="radio" name="hpos" value="center" checked onchange="onHPosChange()">
+          <span class="radio-label">Centered on the wall</span>
+        </label>
+        <label class="radio-option" id="opt-custom">
+          <input type="radio" name="hpos" value="custom" onchange="onHPosChange()">
+          <div>
+            <span class="radio-label">Custom position</span>
+            <div class="custom-row">
+              <span>Center of hanging is</span>
+              <input type="number" id="customOffset" placeholder="e.g. 60" min="1" inputmode="decimal"
+                     onfocus="document.querySelector('input[value=custom]').checked=true; onHPosChange();">
+              <span id="unit-label-offset">in</span>
+              <span>from the left wall edge</span>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- HANGER TYPE -->
+  <div class="card">
+    <div class="card-title">Hanger Type</div>
+    <div class="field">
+      <select id="hangerType" onchange="showHangerInputs()">
+        <option value="single">Single hook or nail (keyhole, single D-ring)</option>
+        <option value="wire">Wire</option>
+        <option value="double">Two hooks / two D-rings</option>
+        <option value="sawtooth">Sawtooth bracket</option>
+      </select>
+    </div>
+
+    <!-- Single hook -->
+    <div class="hanger-fields" id="fields-single">
+      <div class="field">
+        <label for="singleDist">Distance from top of frame to hook</label>
+        <input type="number" id="singleDist" placeholder="e.g. 2.5" min="0" inputmode="decimal">
+        <p class="hint">Flip the frame face-down. Measure from the <strong>top edge</strong> straight down to the center of the hook hole or D-ring slot.</p>
+      </div>
+    </div>
+
+    <!-- Wire -->
+    <div class="hanger-fields hidden" id="fields-wire">
+      <div class="info-box">
+        <strong>How to measure the wire distance:</strong>
+        Flip the hanging face-down. Pull the wire up from the center with one finger until it's taut. Measure from the <strong>top edge of the frame</strong> straight down to the highest point of the wire at your finger. That's your wire distance.
+      </div>
+      <div class="field">
+        <label for="wireDist">Distance from top of frame to wire peak</label>
+        <input type="number" id="wireDist" placeholder="e.g. 3" min="0" inputmode="decimal">
+      </div>
+    </div>
+
+    <!-- Two hooks -->
+    <div class="hanger-fields hidden" id="fields-double">
+      <div class="field">
+        <label for="doubleDist">Distance from top of frame to hooks</label>
+        <input type="number" id="doubleDist" placeholder="e.g. 2" min="0" inputmode="decimal">
+        <p class="hint">Measure from the <strong>top edge</strong> down to the center of the hook holes. Both hooks should be at the same height.</p>
+      </div>
+      <div class="field">
+        <label for="doubleSpacing">Horizontal distance between the two hooks</label>
+        <input type="number" id="doubleSpacing" placeholder="e.g. 12" min="0" inputmode="decimal">
+        <p class="hint">Measure center-to-center, from the left hook to the right hook.</p>
+      </div>
+    </div>
+
+    <!-- Sawtooth -->
+    <div class="hanger-fields hidden" id="fields-sawtooth">
+      <div class="field">
+        <label for="sawtoothDist">Distance from top of frame to sawtooth strip</label>
+        <input type="number" id="sawtoothDist" placeholder="e.g. 0.5" min="0" inputmode="decimal">
+        <p class="hint">Measure from the <strong>top edge</strong> of the frame down to the top of the sawtooth strip. Usually just a few millimetres.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="global-error"></div>
+
+  <button class="btn-calculate" onclick="calculate()">Calculate Nail Placement</button>
+
+  <!-- RESULTS -->
+  <div class="card" id="results">
+    <div class="card-title">Results</div>
+    <div id="result-items"></div>
+    <canvas id="diagram-canvas"></canvas>
+    <div id="iphone-tip">
+      <strong>Using this on your iPhone?</strong>
+      In Safari, tap the <strong>Share</strong> button (the box with an arrow) → <strong>Add to Home Screen</strong>. The app will appear as an icon and open full-screen like a native app.
+    </div>
+  </div>
+
+</main>
+
+<script>
+  // ── State ──────────────────────────────────────────────
+  let unit = 'in';
+
+  // ── Unit toggle ────────────────────────────────────────
+  function setUnit(u) {
+    unit = u;
+    document.getElementById('btn-in').classList.toggle('active', u === 'in');
+    document.getElementById('btn-cm').classList.toggle('active', u === 'cm');
+    document.getElementById('unit-display').textContent = u === 'in' ? '(inches)' : '(cm)';
+    document.getElementById('unit-label-offset').textContent = u === 'in' ? 'in' : 'cm';
+
+    // Update defaults and hints
+    if (u === 'in') {
+      document.getElementById('desiredCenter').value = 57;
+      document.getElementById('wallHeight').placeholder = 'e.g. 96';
+      document.getElementById('wallWidth').placeholder  = 'e.g. 120';
+      document.getElementById('hint-wall').innerHTML =
+        'Measure the full width and height of your wall. Standard ceiling is <strong>96"</strong> (8&nbsp;ft).';
+      document.getElementById('hint-center').innerHTML =
+        'Gallery standard is <strong>57"</strong> from floor to center of the art. Adjust to your eye level or preference.';
+    } else {
+      document.getElementById('desiredCenter').value = 145;
+      document.getElementById('wallHeight').placeholder = 'e.g. 244';
+      document.getElementById('wallWidth').placeholder  = 'e.g. 305';
+      document.getElementById('hint-wall').innerHTML =
+        'Measure the full width and height of your wall. Standard ceiling is <strong>244 cm</strong> (8&nbsp;ft).';
+      document.getElementById('hint-center').innerHTML =
+        'Gallery standard is <strong>145 cm</strong> from floor to center of the art. Adjust to your eye level or preference.';
+    }
+  }
+
+  // ── Horizontal position radio ──────────────────────────
+  function onHPosChange() {
+    const val = document.querySelector('input[name="hpos"]:checked').value;
+    document.getElementById('opt-center').classList.toggle('selected', val === 'center');
+    document.getElementById('opt-custom').classList.toggle('selected', val === 'custom');
+  }
+
+  // ── Hanger type switch ─────────────────────────────────
+  function showHangerInputs() {
+    const type = document.getElementById('hangerType').value;
+    ['single','wire','double','sawtooth'].forEach(t => {
+      document.getElementById('fields-' + t).classList.toggle('hidden', t !== type);
+    });
+  }
+
+  // ── Helpers ────────────────────────────────────────────
+  function getNum(id) { return parseFloat(document.getElementById(id).value); }
+
+  function fmt(n) {
+    const r = Math.round(n * 100) / 100;
+    return unit === 'in' ? r + '"' : r + ' cm';
+  }
+
+  // Express decimal inches as nearest common fraction (e.g. 52.5 → 52½")
+  function fmtFraction(n) {
+    if (unit !== 'in') return fmt(n);
+    const whole = Math.floor(n);
+    const dec   = n - whole;
+    const fracs = [
+      [7/8, '⅞'], [3/4, '¾'], [5/8, '⅝'], [1/2, '½'],
+      [3/8, '⅜'], [1/4, '¼'], [1/8, '⅛'],
+    ];
+    for (const [v, s] of fracs) {
+      if (Math.abs(dec - v) < 0.04) return (whole || '') + s + '"';
+    }
+    return fmt(n);
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('global-error');
+    el.textContent = msg;
+    el.style.display = msg ? 'block' : 'none';
+  }
+
+  // ── Main calculation ───────────────────────────────────
+  function calculate() {
+    showError('');
+    document.getElementById('results').style.display = 'none';
+
+    // Collect inputs
+    const wallW     = getNum('wallWidth');
+    const wallH     = getNum('wallHeight');
+    const frameW    = getNum('frameWidth');
+    const frameH    = getNum('frameHeight');
+    const centerH   = getNum('desiredCenter');
+    const hposType  = document.querySelector('input[name="hpos"]:checked').value;
+    const hangerType = document.getElementById('hangerType').value;
+
+    // Validate common fields
+    const missing = [];
+    if (isNaN(wallW)   || wallW   <= 0) missing.push('Wall width');
+    if (isNaN(wallH)   || wallH   <= 0) missing.push('Wall height');
+    if (isNaN(frameW)  || frameW  <= 0) missing.push('Hanging width');
+    if (isNaN(frameH)  || frameH  <= 0) missing.push('Hanging height');
+    if (isNaN(centerH) || centerH <= 0) missing.push('Desired center height');
+
+    // Collect hanger-specific inputs
+    let distFromTop = 0;
+    let hookSpacing = 0;
+
+    if (hangerType === 'single') {
+      distFromTop = getNum('singleDist');
+      if (isNaN(distFromTop) || distFromTop < 0) missing.push('Distance from top to hook');
+    } else if (hangerType === 'wire') {
+      distFromTop = getNum('wireDist');
+      if (isNaN(distFromTop) || distFromTop < 0) missing.push('Wire distance from top');
+    } else if (hangerType === 'sawtooth') {
+      distFromTop = getNum('sawtoothDist');
+      if (isNaN(distFromTop) || distFromTop < 0) missing.push('Sawtooth distance from top');
+    } else if (hangerType === 'double') {
+      distFromTop = getNum('doubleDist');
+      hookSpacing = getNum('doubleSpacing');
+      if (isNaN(distFromTop) || distFromTop < 0) missing.push('Distance from top to hooks');
+      if (isNaN(hookSpacing) || hookSpacing <= 0) missing.push('Hook spacing');
+    }
+
+    if (missing.length) {
+      showError('Please fill in: ' + missing.join(', ') + '.');
+      return;
+    }
+
+    // Sanity checks
+    if (frameW >= wallW)       { showError('The hanging (' + fmt(frameW) + ' wide) is wider than the wall (' + fmt(wallW) + '). Check your measurements.'); return; }
+    if (frameH >= wallH)       { showError('The hanging (' + fmt(frameH) + ' tall) is taller than the wall (' + fmt(wallH) + '). Check your measurements.'); return; }
+    if (distFromTop > frameH)  { showError('The hanger measurement (' + fmt(distFromTop) + ') is greater than the hanging height (' + fmt(frameH) + '). Check your measurements.'); return; }
+    if (hangerType === 'double' && hookSpacing >= frameW) {
+      showError('The hook spacing (' + fmt(hookSpacing) + ') is wider than the frame itself (' + fmt(frameW) + '). Check your measurements.');
+      return;
+    }
+
+    // ── Core math ──
+    // nail height from floor = desired_center + frame_height/2 - dist_from_top
+    // Derivation: frame_top = nail_height + dist_from_top
+    //             frame_center = frame_top - frame_height/2 = desired_center  →  solve for nail_height
+    const nailH = centerH + frameH / 2 - distFromTop;
+
+    if (nailH <= 0)   { showError('The nail height comes out below the floor (' + fmt(nailH) + '). Your desired center height may be too low relative to the hanger position.'); return; }
+    if (nailH > wallH) { showError('The nail height (' + fmt(nailH) + ') would be above the wall (' + fmt(wallH) + '). Try lowering the desired center height.'); return; }
+
+    // Horizontal position of hanging's center
+    let frameCenterX;
+    if (hposType === 'center') {
+      frameCenterX = wallW / 2;
+    } else {
+      frameCenterX = getNum('customOffset');
+      if (isNaN(frameCenterX) || frameCenterX <= 0) { showError('Please enter the custom horizontal offset.'); return; }
+    }
+
+    // Frame edges
+    const frameLeft  = frameCenterX - frameW / 2;
+    const frameRight = frameCenterX + frameW / 2;
+    if (frameLeft < 0)      { showError('The hanging extends ' + fmt(-frameLeft) + ' past the left wall edge at this position. Try centering it or adjusting the offset.'); return; }
+    if (frameRight > wallW) { showError('The hanging extends ' + fmt(frameRight - wallW) + ' past the right wall edge at this position. Try centering it or adjusting the offset.'); return; }
+
+    // Two-hook nail positions
+    let leftNailX, rightNailX;
+    if (hangerType === 'double') {
+      leftNailX  = frameCenterX - hookSpacing / 2;
+      rightNailX = frameCenterX + hookSpacing / 2;
+      if (leftNailX <= 0 || rightNailX >= wallW) {
+        showError('With this hook spacing and position, the nails fall outside the wall. Check your measurements.');
+        return;
+      }
+    }
+
+    const frameTopH = nailH + distFromTop; // height of frame top from floor
+
+    // ── Render results ──
+    const items = document.getElementById('result-items');
+    items.innerHTML = '';
+
+    function addResult(icon, label, mainVal, sub) {
+      const subHtml = sub ? `<div class="result-sub">${sub}</div>` : '';
+      items.insertAdjacentHTML('beforeend', `
+        <div class="result-item">
+          <div class="result-icon">${icon}</div>
+          <div>
+            <div class="result-label">${label}</div>
+            <div class="result-value">${mainVal}</div>
+            ${subHtml}
+          </div>
+        </div>`);
+    }
+
+    if (hangerType === 'double') {
+      addResult('✓', 'Left nail — height from floor',
+        fmtFraction(nailH),
+        fmtFraction(leftNailX) + ' from the left wall edge');
+      addResult('✓', 'Right nail — height from floor',
+        fmtFraction(nailH),
+        fmtFraction(rightNailX) + ' from the left wall edge');
+    } else {
+      addResult('✓', 'Nail height from floor',
+        fmtFraction(nailH),
+        'Nail goes ' + fmtFraction(frameCenterX) + ' from the left wall edge');
+    }
+
+    addResult('↕', 'Frame top will be at',
+      fmtFraction(frameTopH) + ' from floor',
+      'Frame bottom at ' + fmtFraction(frameTopH - frameH) + ' from floor');
+
+    // Also show from-ceiling measurement (sometimes easier to mark)
+    const nailFromCeiling = wallH - nailH;
+    addResult('⬇', 'Or measure down from ceiling',
+      fmtFraction(nailFromCeiling),
+      'Whichever is easier to measure with your tape');
+
+    // ── Draw diagram ──
+    drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH,
+                frameCenterX, nailH, hangerType, leftNailX, rightNailX, hookSpacing);
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  // ── Canvas diagram ─────────────────────────────────────
+  function drawDiagram(wallW, wallH, frameW, frameH, frameLeft, frameTopH,
+                       frameCenterX, nailH, hangerType, leftNailX, rightNailX) {
+
+    const canvas = document.getElementById('diagram-canvas');
+    const ctx    = canvas.getContext('2d');
+    const dpr    = window.devicePixelRatio || 1;
+
+    // Size: fill card width, maintain wall aspect ratio (capped so it's not too tall)
+    const availW  = canvas.parentElement.clientWidth - 32;
+    const aspect  = Math.min(wallH / wallW, 1.2); // cap extreme tall walls
+    const dispW   = availW;
+    const dispH   = Math.round(dispW * aspect);
+
+    canvas.style.width  = dispW + 'px';
+    canvas.style.height = dispH + 'px';
+    canvas.width  = dispW * dpr;
+    canvas.height = dispH * dpr;
+    ctx.scale(dpr, dpr);
+
+    // Scale factor: wall units → pixels
+    const scale = dispW / wallW;
+
+    // Convert "inches from floor" to canvas Y (canvas Y=0 is wall top)
+    function wx(x) { return x * scale; }
+    function wy(y) { return dispH - y * scale; }
+
+    // ── Background: wall ──
+    ctx.fillStyle = '#f0ede6';
+    ctx.fillRect(0, 0, dispW, dispH);
+
+    // Wall border
+    ctx.strokeStyle = '#9a8a7a';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(1, 1, dispW - 2, dispH - 2);
+
+    // Floor line label
+    ctx.fillStyle = '#aaa';
+    ctx.font = `${Math.max(9, Math.round(dispW / 38))}px -apple-system,sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('floor', dispW / 2, dispH - 3);
+
+    // ── Frame rectangle ──
+    const fL = wx(frameLeft);
+    const fT = wy(frameTopH);          // canvas y of frame top edge
+    const fW = frameW * scale;
+    const fH = frameH * scale;
+
+    ctx.fillStyle = '#d0e8ff';
+    ctx.fillRect(fL, fT, fW, fH);
+    ctx.strokeStyle = '#007aff';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(fL, fT, fW, fH);
+
+    // Dashed center lines on frame
+    ctx.strokeStyle = 'rgba(0,122,255,0.35)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.beginPath();
+    ctx.moveTo(fL + fW / 2, fT);   ctx.lineTo(fL + fW / 2, fT + fH); // vertical center
+    ctx.moveTo(fL, fT + fH / 2);   ctx.lineTo(fL + fW, fT + fH / 2); // horizontal center
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Frame label
+    const fontSize = Math.max(10, Math.round(dispW / 32));
+    ctx.font = `600 ${fontSize}px -apple-system,sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#005acc';
+    if (fH > fontSize * 2.2 && fW > 50) {
+      ctx.fillText('Hanging', fL + fW / 2, fT + fH / 2);
+    }
+
+    // ── Nail(s) ──
+    function drawNail(nx, ny) {
+      const cx = wx(nx);
+      const cy = wy(ny);
+      // Red circle
+      ctx.fillStyle = '#ff3b30';
+      ctx.beginPath();
+      ctx.arc(cx, cy, 5 * dpr * 0.6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#990000';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // White X
+      const r = 3 * dpr * 0.6;
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(cx - r, cy - r); ctx.lineTo(cx + r, cy + r);
+      ctx.moveTo(cx + r, cy - r); ctx.lineTo(cx - r, cy + r);
+      ctx.stroke();
+    }
+
+    if (hangerType === 'double') {
+      drawNail(leftNailX,  nailH);
+      drawNail(rightNailX, nailH);
+    } else {
+      drawNail(frameCenterX, nailH);
+    }
+
+    // ── Height annotation ──
+    // Vertical arrow on the right side showing nail height from floor
+    const annotX = Math.min(wx(frameLeft + frameW) + 18, dispW - 28);
+    const nailCanvasY = wy(nailH);
+    const floorCanvasY = dispH - 2;
+
+    if (annotX < dispW - 5) {
+      // Dashed vertical line
+      ctx.strokeStyle = '#34c759';
+      ctx.lineWidth   = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      ctx.moveTo(annotX, floorCanvasY);
+      ctx.lineTo(annotX, nailCanvasY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Arrowheads
+      ctx.fillStyle = '#34c759';
+      ctx.beginPath();
+      ctx.moveTo(annotX, nailCanvasY - 1);
+      ctx.lineTo(annotX - 4, nailCanvasY + 6);
+      ctx.lineTo(annotX + 4, nailCanvasY + 6);
+      ctx.fill();
+
+      // Measurement label
+      const labelFontSize = Math.max(9, Math.round(dispW / 34));
+      ctx.font = `700 ${labelFontSize}px -apple-system,sans-serif`;
+      ctx.textAlign   = 'left';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle   = '#1a7a35';
+
+      const midY = (nailCanvasY + floorCanvasY) / 2;
+      const labelText = fmtFraction(nailH);
+      // Background pill for readability
+      const tw = ctx.measureText(labelText).width;
+      ctx.fillStyle = 'rgba(255,255,255,0.85)';
+      ctx.beginPath();
+      ctx.roundRect(annotX + 4, midY - labelFontSize * 0.75, tw + 8, labelFontSize * 1.5, 4);
+      ctx.fill();
+      ctx.fillStyle = '#1a7a35';
+      ctx.fillText(labelText, annotX + 8, midY);
+    }
+  }
+</script>
+
+</body>
+</html>
