@@ -261,7 +261,7 @@
   <div class="card" id="visualize-card">
     <div class="card-title">Preview on Your Wall</div>
 
-    <div class="viz-sub-title" style="margin-top:0">Wall Photo</div>
+    <div class="viz-sub-title" style="margin-top:0">Wall Photo <span style="font-weight:400;color:var(--text-secondary)">(optional)</span></div>
     <label class="photo-upload-btn">
       📷 &nbsp;Upload Wall Photo
       <input type="file" accept="image/*" id="wall-photo-input" style="display:none" onchange="onWallPhotoChange(this)">
@@ -931,7 +931,7 @@
   //  COMPOSITE VIZ
   // ═══════════════════════════════════════════════════════
   function tryDrawViz() {
-    if (!vizData.wallImg || !vizData.wallW || !vizData.wallH) return;
+    if (!vizData.wallW || !vizData.wallH) return;
 
     const canvas   = document.getElementById('viz-canvas');
     const dpr      = window.devicePixelRatio || 1;
@@ -947,14 +947,22 @@
     const ctx = canvas.getContext('2d');
     ctx.scale(dpr, dpr);
 
-    // Draw wall photo (cropped to calibration region, stretched to fill)
-    const wc = vizData.wallCrop;
-    ctx.drawImage(vizData.wallImg,
-      wc.l * vizData.wallImg.width,
-      wc.t * vizData.wallImg.height,
-      (wc.r - wc.l) * vizData.wallImg.width,
-      (wc.b - wc.t) * vizData.wallImg.height,
-      0, 0, dispW, dispH);
+    // Draw wall — photo if available, otherwise a plain rectangle
+    if (vizData.wallImg) {
+      const wc = vizData.wallCrop;
+      ctx.drawImage(vizData.wallImg,
+        wc.l * vizData.wallImg.width,
+        wc.t * vizData.wallImg.height,
+        (wc.r - wc.l) * vizData.wallImg.width,
+        (wc.b - wc.t) * vizData.wallImg.height,
+        0, 0, dispW, dispH);
+    } else {
+      ctx.fillStyle = '#f0ede6';
+      ctx.fillRect(0, 0, dispW, dispH);
+      ctx.strokeStyle = '#c0b0a0';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, dispW - 2, dispH - 2);
+    }
 
     const xPx = dispW / vizData.wallW;
     const yPx = dispH / vizData.wallH;
