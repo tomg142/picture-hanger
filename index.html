@@ -1374,13 +1374,22 @@
     let startX = (vizData.wallW - totalW) / 2;
 
     cols.forEach(col => {
-      let topH = vizData.wallH / 2 + col.totalH / 2;
-      col.hangings.forEach(h => {
-        const centeredLeft = startX + (col.width - h.result.frameW) / 2;
-        h.dragOffset.x = centeredLeft - h.result.frameLeft;
-        h.dragOffset.y = h.result.frameTopH - topH;
-        topH -= h.result.frameH + gap;
-      });
+      if (col.hangings.length === 1) {
+        // Single hanging — preserve its specified center height exactly
+        const h = col.hangings[0];
+        h.dragOffset.x = startX + (col.width - h.result.frameW) / 2 - h.result.frameLeft;
+        h.dragOffset.y = 0;
+      } else {
+        // Multiple hangings — center the group at the average of their specified center heights
+        const avgCenterH = col.hangings.reduce((s, h) =>
+          s + (h.result.frameTopH - h.result.frameH / 2), 0) / col.hangings.length;
+        let topH = avgCenterH + col.totalH / 2;
+        col.hangings.forEach(h => {
+          h.dragOffset.x = startX + (col.width - h.result.frameW) / 2 - h.result.frameLeft;
+          h.dragOffset.y = h.result.frameTopH - topH;
+          topH -= h.result.frameH + gap;
+        });
+      }
       startX += col.width + gap;
     });
 
